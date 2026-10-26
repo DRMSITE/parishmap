@@ -30,10 +30,12 @@ notice if it is forgotten. Do these once, when the repository is created, and ti
 
 ## Before the first public release
 
-- Fill in the contact method in `CODE_OF_CONDUCT.md`.
 - Confirm the company details to show (company number, registered office) in `NOTICE`, if wanted.
-- Follow the documentation from a blank machine and a throwaway Firebase project, and fix every
-  place where it did not match.
+- Check that mail to `conduct@drmsite.com` (the code of conduct's contact) reaches someone who
+  will read it.
+- Have someone other than the author follow the documentation from a blank machine and a
+  throwaway Firebase project, and fix every place where it did not match. The author did this once,
+  on 2026-10-26.
 - Scan the tree for secrets and anything particular to one council.
 
 ## README screenshots
