@@ -16,7 +16,8 @@ notice if it is forgotten. Do these once, when the repository is created, and ti
   Dependabot alerts (Settings, Code security). `SECURITY.md` points people to private reporting.
 - **Discussions:** switch on, for questions that are not bugs.
 - **Branch protection on `main`:** require the CI checks (`checks`, `e2e`, `rules`), CodeQL and
-  the sign-off check, and a review.
+  the sign-off check, and a review. CodeQL only runs once the repository is public (code scanning
+  is free for public repositories and paid for private ones), so it shows as skipped until then.
 - **Licence:** GitHub should detect AGPL-3.0 from `LICENSE`.
 
 ## Before each release
