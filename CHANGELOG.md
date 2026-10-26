@@ -5,7 +5,7 @@ All notable changes are recorded here. The format follows
 [Semantic Versioning](https://semver.org/) once it reaches 1.0. A release that changes
 `firestore.rules` says so, because the rules must be deployed with it.
 
-## [Unreleased] (0.1.0, first public release)
+## [0.1.0] - 2026-10-26 (first public release)
 
 ### Added
 
