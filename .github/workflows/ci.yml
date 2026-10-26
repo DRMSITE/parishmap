@@ -12,10 +12,12 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+# The runner is pinned: ubuntu-latest has begun moving to Ubuntu 26.04, where the Playwright
+# system-package install stalls. Move to a newer release only after trying it.
 jobs:
   checks:
     name: Types, lint, unit tests and build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
@@ -34,7 +36,7 @@ jobs:
 
   e2e:
     name: Browser tests and accessibility
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
@@ -54,7 +56,7 @@ jobs:
 
   rules:
     name: Firestore rules (emulator)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
