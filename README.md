@@ -10,7 +10,7 @@ It runs in **your own Firebase project**, so your data, keys and costs stay with
 Built by [DRMSITE LTD](https://drmsite.com) and released under the
 [GNU Affero General Public Licence](LICENSE) (AGPL-3.0-or-later).
 
-> **Status: pre-release (0.1.0).** It was built for one parish council's own use, and I have not yet seen anyone else follow this open-source packaging from a blank machine. Expect rough edges in the set-up, and please [report them](https://github.com/DRMSITE/parishmap/issues). See [what it does not do](#what-it-does-not-do).
+> **Status: pre-release (0.1.0).** It was built for one parish council's own use. I have followed this packaging once myself, from a fresh clone to a signed-in administrator on a new Firebase project, and fixed what I found, but nobody else has yet. The Ordnance Survey provider and the tile function's refusal of out-of-area tiles have been tested in code only, not on a live site. Expect rough edges in the set-up, and please [report them](https://github.com/DRMSITE/parishmap/issues). See [what it does not do](#what-it-does-not-do).
 
 ## What it does
 
@@ -18,7 +18,7 @@ In practice it comes down to five things.
 
 - **A map** of your area, using OpenStreetMap by default (or Ordnance Survey, or another provider, if you hold a licence), with points, lines and areas, an optional council boundary and a search for places.
 - **A Points page** that lists everything as text. It is the equivalent of the map for people who use a keyboard or a screen reader, and it is kept in step with the map rather than added afterwards.
-- **Projects**, with sub-projects, a responsible councillor for each and a five-lane board of actions (Ideas, Agreed, In progress, Blocked, Done), plus a log of notes. Projects and actions can be linked to places on the map, and each place shows the projects that concern it.
+- **Projects**, with sub-projects, a responsible councillor for each and a five-lane board of actions (Ideas, Agreed, In progress, Blocked, Done), plus a log of notes. Open a project from the Projects page to see its board, where each action has a **Move to** list (and Move up and Move down buttons) as well as drag and drop. Projects and actions can be linked to places on the map, and each place shows the projects that concern it.
 - **Roles**: administrator, clerk, councillor and member, each allowed only what the council decides. The Clerk invites people and manages accounts on a People page, and every change is recorded on an Activity page.
 - **Accessibility** aimed at WCAG 2.2 AA, with keyboard use throughout and automated checks with axe. Those checks catch a good deal, though by no means everything, so it is worth testing with your own people.
 
@@ -42,10 +42,15 @@ You need Node 24.12 or later, a Google account and the [Firebase CLI](https://fi
 git clone https://github.com/DRMSITE/parishmap.git
 cd parishmap
 npm install
+```
+
+Then follow **[Setting up Firebase](docs/firebase-setup.md)**. Create the project first, because the next command needs its id:
+
+```bash
 npm run setup          # asks about your council; writes deployment/, .env and .firebaserc
 ```
 
-Then follow **[Setting up Firebase](docs/firebase-setup.md)**: create the project, turn on sign-in, deploy, and make yourself the first administrator. If you would rather look at the interface first, run `VITE_LOCAL_DATA=true npm run dev` (on Windows PowerShell: `$env:VITE_LOCAL_DATA="true"; npm run dev`). That skips sign-in and keeps example data in your browser, so it suits development and tests only, and you should never deploy it.
+The guide goes on to turn on sign-in, deploy, and make you the first administrator. If you would rather look at the interface first, run `VITE_LOCAL_DATA=true npm run dev` (on Windows PowerShell: `$env:VITE_LOCAL_DATA="true"; npm run dev`). That skips sign-in and keeps example data in your browser, so it suits development and tests only, and you should never deploy it.
 
 ## Documentation
 

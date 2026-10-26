@@ -71,14 +71,17 @@ function buildItem(node, { data, projects, myUid }) {
   const wanted = /** @type {[string, string, string?][]} */ ([]);
   if (can.canEditProject(project)) wanted.push(["Edit", "edit"]);
   if (can.canCreateProject(project) && node.depth < config.limits.projectDepth)
-    wanted.push(["Add sub-project to", "add-sub"]);
+    wanted.push(["Add sub-project", "add-sub"]);
   if (can.canDeleteProject()) wanted.push(["Delete", "remove", "danger"]);
   if (wanted.length) {
     const row = document.createElement("div");
     row.className = "point-actions";
     // Handled by one delegated listener on the tree (see render).
     for (const [verb, action, variant] of wanted) {
-      const button = actionButton(verb, project.title, () => {}, variant);
+      // The hidden part follows the visible verb, so sighted users read "Add sub-project"
+      // and a screen reader reads "Add sub-project to <title>".
+      const name = action === "add-sub" ? `to ${project.title}` : project.title;
+      const button = actionButton(verb, name, () => {}, variant);
       button.dataset.action = action;
       row.append(button);
     }

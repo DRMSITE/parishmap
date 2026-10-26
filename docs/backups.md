@@ -5,7 +5,7 @@ part of Firestore backups. Plan for both.
 
 ## What to switch on
 
-Nothing here is on by default, so it has to be asked for. Replace `<project>` with your Firebase project id and `<location>` with your database's location
+Nothing here is on unless you ask for it. The console's database wizard does offer a weekly backup, kept for 98 days by default, so if you accepted that, note the retention when you write your privacy notice, and either change it or leave out the weekly command below. Replace `<project>` with your Firebase project id and `<location>` with your database's location
 (for example `europe-west2`). The commands change as Google updates `gcloud`, so check each with
 `--help` before you run it.
 

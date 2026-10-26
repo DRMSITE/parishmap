@@ -117,7 +117,7 @@ async function main() {
     console.log("Sign-in is already set up as ParishMap needs it. Nothing to change.");
     return;
   }
-  console.log("This would:");
+  console.log(confirmed ? "Changing:" : "This would:");
   for (const change of changes) console.log(`  - ${change}`);
   if (!confirmed) {
     console.log("\nNothing changed. Add --yes to do it.");

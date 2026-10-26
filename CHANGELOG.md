@@ -29,9 +29,10 @@ All notable changes are recorded here. The format follows
 - Web Awesome is now the free, MIT-licensed package; no account or token is needed.
 - Icons are bundled rather than fetched from Font Awesome's servers.
 - No council-specific name, project, boundary or data remains in the code.
+- The "Add sub-project" and "Move to" buttons no longer show a dangling "to" or a missing space; screen readers still hear the full name.
 
 ### Known gaps
 
-- The set-up has not yet been followed from a blank machine by someone other than the author.
-- `npm run configure-auth` has not been run against a brand-new Firebase project.
+- The set-up has been followed once from a fresh clone on a new Firebase project, by the author, but not yet by anyone else.
+- The Ordnance Survey provider, and the tile function's refusal of tiles outside the area, are covered by tests but have not been tried on a live site.
 - No per-person rate limit on map tile requests.
