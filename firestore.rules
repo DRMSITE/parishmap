@@ -1,0 +1,287 @@
+rules_version = '2';
+
+// These rules are the security boundary. The browser's checks only hide buttons.
+//
+// Roles are custom claims set by an admin-only process (never by the client):
+//   admin      everything, including managing users
+//   clerk      add, edit and delete any feature
+//   councillor add features; edit and delete their own
+//   member     read only
+// Everyone must have signed in with a second factor (MFA), and anyone without a role
+// is refused, so a stray account created by mistake can see nothing.
+//
+// Geometry is stored as a JSON string because Firestore does not allow nested arrays,
+// which GeoJSON coordinates are. The rules can check its type and size but not its
+// structure; the app validates it on write and again on read, and only trusted roles
+// can write.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedInWithSecondFactor() {
+      return request.auth != null
+        && 'sign_in_second_factor' in request.auth.token.firebase;
+    }
+
+    function role() {
+      return request.auth.token.get('role', '');
+    }
+
+    function canRead() {
+      return signedInWithSecondFactor()
+        && role() in ['admin', 'clerk', 'councillor', 'member'];
+    }
+
+    function canAuthor() {
+      return signedInWithSecondFactor()
+        && role() in ['admin', 'clerk', 'councillor'];
+    }
+
+    function canEditAny() {
+      return signedInWithSecondFactor() && role() in ['admin', 'clerk'];
+    }
+
+    function canChange(existing) {
+      return canAuthor()
+        && (canEditAny() || existing.createdBy == request.auth.uid);
+    }
+
+    // Mirrors config.limits in src/config.js (title 120, notes 2000).
+    function validFeature(d) {
+      return d.keys().hasOnly([
+          'lat', 'lng', 'category', 'geometry', 'data',
+          'createdBy', 'createdByEmail', 'createdAt', 'updatedAt'
+        ])
+        && d.keys().hasAll([
+          'lat', 'lng', 'data', 'createdBy', 'createdByEmail', 'createdAt', 'updatedAt'
+        ])
+        && d.lat is number && d.lat >= -90 && d.lat <= 90
+        && d.lng is number && d.lng >= -180 && d.lng <= 180
+        && (!('category' in d) || (d.category is string && d.category.size() <= 60))
+        && (!('geometry' in d) || (d.geometry is string && d.geometry.size() <= 60000))
+        && d.data is map
+        && d.data.keys().hasOnly(['title', 'notes'])
+        && d.data.keys().hasAll(['title'])
+        && d.data.title is string
+        && d.data.title.size() > 0 && d.data.title.size() <= 120
+        && (!('notes' in d.data) || (d.data.notes is string && d.data.notes.size() <= 2000))
+        && d.createdBy is string
+        && d.createdByEmail is string
+        && d.createdAt is timestamp
+        && d.updatedAt is timestamp;
+    }
+
+    match /features/{featureId} {
+      allow read: if canRead();
+
+      allow create: if canAuthor()
+        && validFeature(request.resource.data)
+        && request.resource.data.createdBy == request.auth.uid
+        && request.resource.data.createdByEmail == request.auth.token.email
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time;
+
+      allow update: if canChange(resource.data)
+        && validFeature(request.resource.data)
+        && request.resource.data.createdBy == resource.data.createdBy
+        && request.resource.data.createdByEmail == resource.data.createdByEmail
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.updatedAt == request.time;
+
+      allow delete: if canChange(resource.data);
+    }
+
+    // ---- Projects, actions and notes ----
+    //
+    // Admin and clerk create top-level projects and name the responsible person. A
+    // responsible councillor edits their own project and may add sub-projects under it.
+    // Any councillor may add an action (in the "ideas" lane) or a note. Only the
+    // responsible councillor, the clerk or an admin may move an action between lanes or
+    // reorder it. Sub-project depth is capped in the app only; rules cannot count it.
+
+    function projectPath(projectId) {
+      return /databases/$(database)/documents/projects/$(projectId);
+    }
+
+    function responsibleFor(projectId) {
+      return get(projectPath(projectId)).data.responsibleUid == request.auth.uid;
+    }
+
+    // May move and reorder actions in this project, and edit or delete any of them.
+    function canManageProject(projectId) {
+      return canEditAny() || (canAuthor() && responsibleFor(projectId));
+    }
+
+    // The author and time stamps every project, action and note carries.
+    function validStamps(d) {
+      return d.createdBy is string
+        && d.createdByEmail is string
+        && d.createdAt is timestamp
+        && d.updatedAt is timestamp
+        && d.updatedBy is string
+        && d.updatedByEmail is string;
+    }
+
+    function stampedOnCreate(d) {
+      return d.createdBy == request.auth.uid
+        && d.createdByEmail == request.auth.token.email
+        && d.createdAt == request.time
+        && d.updatedAt == request.time
+        && d.updatedBy == request.auth.uid
+        && d.updatedByEmail == request.auth.token.email;
+    }
+
+    function stampedOnUpdate(d, existing) {
+      return d.createdBy == existing.createdBy
+        && d.createdByEmail == existing.createdByEmail
+        && d.createdAt == existing.createdAt
+        && d.updatedAt == request.time
+        && d.updatedBy == request.auth.uid
+        && d.updatedByEmail == request.auth.token.email;
+    }
+
+    // featureIds links to records in `features`. Their contents are not checked here;
+    // the app shows a link to a deleted feature as "removed from the map".
+    function validProject(d) {
+      return d.keys().hasOnly([
+          'title', 'summary', 'status', 'parentId', 'responsibleUid', 'responsibleEmail',
+          'featureIds', 'createdBy', 'createdByEmail', 'createdAt', 'updatedAt',
+          'updatedBy', 'updatedByEmail'
+        ])
+        && d.keys().hasAll([
+          'title', 'summary', 'status', 'parentId', 'responsibleUid', 'responsibleEmail',
+          'featureIds', 'createdBy', 'createdByEmail', 'createdAt', 'updatedAt',
+          'updatedBy', 'updatedByEmail'
+        ])
+        && d.title is string && d.title.size() > 0 && d.title.size() <= 120
+        && d.summary is string && d.summary.size() <= 2000
+        && d.status in ['planning', 'active', 'on-hold', 'complete']
+        && (d.parentId == null || (d.parentId is string && d.parentId.size() > 0))
+        && d.responsibleUid is string && d.responsibleUid.size() > 0
+        && d.responsibleEmail is string
+        && d.featureIds is list && d.featureIds.size() <= 20
+        && validStamps(d);
+    }
+
+    // Mirrors config.limits (title 120, notes 2000).
+    function validAction(d) {
+      return d.keys().hasOnly([
+          'projectId', 'title', 'details', 'lane', 'order', 'assigneeUid',
+          'assigneeEmail', 'dueDate', 'featureIds', 'createdBy', 'createdByEmail',
+          'createdAt', 'updatedAt', 'updatedBy', 'updatedByEmail'
+        ])
+        && d.keys().hasAll([
+          'projectId', 'title', 'details', 'lane', 'order', 'featureIds', 'createdBy',
+          'createdByEmail', 'createdAt', 'updatedAt', 'updatedBy', 'updatedByEmail'
+        ])
+        && d.projectId is string
+        && d.title is string && d.title.size() > 0 && d.title.size() <= 120
+        && d.details is string && d.details.size() <= 2000
+        && d.lane in ['ideas', 'agreed', 'in-progress', 'blocked', 'done']
+        && d.order is number
+        && (('assigneeUid' in d) == ('assigneeEmail' in d))
+        && (!('assigneeUid' in d)
+          || (d.assigneeUid is string && d.assigneeUid.size() > 0
+            && d.assigneeEmail is string))
+        && (!('dueDate' in d) || (d.dueDate is string && d.dueDate.size() == 10))
+        && d.featureIds is list && d.featureIds.size() <= 20
+        && validStamps(d);
+    }
+
+    function validNote(d) {
+      return d.keys().hasOnly([
+          'projectId', 'actionId', 'body', 'createdBy', 'createdByEmail', 'createdAt',
+          'updatedAt', 'updatedBy', 'updatedByEmail'
+        ])
+        && d.keys().hasAll([
+          'projectId', 'body', 'createdBy', 'createdByEmail', 'createdAt', 'updatedAt',
+          'updatedBy', 'updatedByEmail'
+        ])
+        && d.projectId is string
+        && (!('actionId' in d) || (d.actionId is string && d.actionId.size() > 0))
+        && d.body is string && d.body.size() > 0 && d.body.size() <= 2000
+        && validStamps(d);
+    }
+
+    match /projects/{projectId} {
+      allow read: if canRead();
+
+      // A top-level project: admin or clerk. A sub-project: also the councillor who is
+      // responsible for the parent, who then becomes responsible for the new one.
+      allow create: if validProject(request.resource.data)
+        && stampedOnCreate(request.resource.data)
+        && (canEditAny()
+          || (canAuthor()
+            && request.resource.data.parentId is string
+            && responsibleFor(request.resource.data.parentId)
+            && request.resource.data.responsibleUid == request.auth.uid));
+
+      // Nobody but admin or clerk changes who is responsible, or moves a project.
+      allow update: if validProject(request.resource.data)
+        && stampedOnUpdate(request.resource.data, resource.data)
+        && request.resource.data.parentId == resource.data.parentId
+        && (canEditAny()
+          || (canAuthor()
+            && resource.data.responsibleUid == request.auth.uid
+            && request.resource.data.responsibleUid == resource.data.responsibleUid
+            && request.resource.data.responsibleEmail == resource.data.responsibleEmail));
+
+      allow delete: if canEditAny();
+    }
+
+    match /actions/{actionId} {
+      allow read: if canRead();
+
+      // Anyone who may author can contribute an action, but only to the "ideas" lane
+      // unless they manage the project.
+      allow create: if canAuthor()
+        && validAction(request.resource.data)
+        && stampedOnCreate(request.resource.data)
+        && exists(projectPath(request.resource.data.projectId))
+        && (request.resource.data.lane == 'ideas'
+          || canManageProject(request.resource.data.projectId));
+
+      // Anyone may edit the content of their own action; managers may edit any. Moving
+      // (a changed lane or order) is for managers only.
+      allow update: if canAuthor()
+        && validAction(request.resource.data)
+        && stampedOnUpdate(request.resource.data, resource.data)
+        && request.resource.data.projectId == resource.data.projectId
+        && (resource.data.createdBy == request.auth.uid
+          || canManageProject(resource.data.projectId))
+        && ((request.resource.data.lane == resource.data.lane
+            && request.resource.data.order == resource.data.order)
+          || canManageProject(resource.data.projectId));
+
+      allow delete: if canAuthor()
+        && (resource.data.createdBy == request.auth.uid
+          || canManageProject(resource.data.projectId));
+    }
+
+    match /notes/{noteId} {
+      allow read: if canRead();
+
+      allow create: if canAuthor()
+        && validNote(request.resource.data)
+        && stampedOnCreate(request.resource.data)
+        && exists(projectPath(request.resource.data.projectId));
+
+      allow update: if canChange(resource.data)
+        && validNote(request.resource.data)
+        && stampedOnUpdate(request.resource.data, resource.data)
+        && request.resource.data.projectId == resource.data.projectId
+        && (request.resource.data.get('actionId', null) == resource.data.get('actionId', null));
+
+      allow delete: if canChange(resource.data);
+    }
+
+    // A record of who invited, changed or disabled whom. Only the `api` function (Admin
+    // SDK, which bypasses these rules) writes it; no client can add, change or delete an
+    // entry, and only admins can read it.
+    match /auditLog/{entryId} {
+      allow read: if signedInWithSecondFactor() && role() == 'admin';
+      allow write: if false;
+    }
+
+    // Anything not matched above is refused.
+  }
+}

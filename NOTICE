@@ -1,0 +1,17 @@
+ParishMap
+Copyright (C) 2026 DRMSITE LTD (https://drmsite.com)
+
+ParishMap is free software, licensed under the GNU Affero General Public
+Licence, version 3 or (at your option) any later version. See the LICENSE file.
+
+Attribution notice (GNU AGPL section 7(b)): if you modify or deploy ParishMap,
+please keep the "Built by DRMSITE LTD" credit on the About page and in the
+navigation footer. Your council's own name, colours and logo may lead
+everywhere else.
+
+ParishMap comes with no warranty. It is software, not legal advice: the council
+that runs it is responsible for its own data protection and for complying with
+the terms of any map-tile provider it chooses.
+
+Third-party software and data used by ParishMap are listed in
+THIRD_PARTY_LICENSES.md.

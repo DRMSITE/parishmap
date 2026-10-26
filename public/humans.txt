@@ -1,0 +1,10 @@
+/* MAKER */
+DRMSITE LTD
+https://drmsite.com
+
+/* SOFTWARE */
+ParishMap, free software under the GNU AGPL v3 or later
+https://github.com/DRMSITE/parishmap
+
+/* THANKS */
+Leaflet, Web Awesome, Firebase, OpenStreetMap contributors, Font Awesome Free

@@ -1,0 +1,61 @@
+<!doctype html>
+<!-- The source of docs/social-preview.png (1280 x 640, GitHub's social preview size).
+     Regenerate with: node scripts/social-preview.mjs -->
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <title>ParishMap social preview</title>
+    <style>
+      html, body { margin: 0; }
+      body {
+        inline-size: 1280px;
+        block-size: 640px;
+        box-sizing: border-box;
+        padding: 72px 88px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background: #12294a;
+        color: #fff;
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+        position: relative;
+        overflow: hidden;
+      }
+      /* A faint map grid, so the card suggests a map without needing tiles. */
+      body::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+        background-size: 64px 64px;
+      }
+      body > * { position: relative; }
+      .title { display: flex; align-items: center; gap: 32px; }
+      .title svg { inline-size: 120px; block-size: 120px; flex: none; }
+      h1 { margin: 0; font-size: 112px; line-height: 1; letter-spacing: -0.02em; }
+      p { margin: 0; }
+      .tagline { font-size: 44px; line-height: 1.25; max-inline-size: 960px; }
+      .maker { font-size: 30px; color: #c9d6ea; }
+      .maker strong { color: #fff; }
+    </style>
+  </head>
+  <body>
+    <div class="title">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true">
+        <path
+          d="M16 2a9 9 0 0 0-9 9c0 7 9 19 9 19s9-12 9-19a9 9 0 0 0-9-9Zm0 12.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Z"
+          fill="#ffffff"
+        />
+      </svg>
+      <h1>ParishMap</h1>
+    </div>
+    <p class="tagline">
+      A private map and project planner for parish, town and community councils.
+    </p>
+    <p class="maker">
+      Free and open source (AGPL-3.0) &middot; Built by <strong>DRMSITE LTD</strong>
+    </p>
+  </body>
+</html>

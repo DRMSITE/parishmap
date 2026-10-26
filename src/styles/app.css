@@ -1,0 +1,468 @@
+/* Application styles. Web Awesome supplies the design tokens (--wa-*); we reuse
+   them rather than defining a second set. Page chrome (skip link, sticky header,
+   navigation drawer) comes from <wa-page>. */
+
+body {
+  margin: 0;
+}
+
+.visually-hidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+wa-page::part(header) {
+  border-block-end: var(--wa-border-width-s) var(--wa-border-style)
+    var(--wa-color-surface-border);
+}
+
+header[slot="header"] {
+  display: flex;
+  align-items: center;
+  min-block-size: 3.5rem;
+  padding-inline: var(--wa-space-m);
+}
+
+.brand {
+  font-weight: var(--wa-font-weight-bold);
+  text-decoration: none;
+}
+
+/* wa-page gives its slotted navigation a display value, which beats the browser's
+   `[hidden]` rule. Without this the links show before sign-in. */
+[data-chrome][hidden] {
+  display: none !important;
+}
+
+.user-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--wa-space-s);
+  margin-inline-start: auto;
+}
+
+/* Wraps rather than overflows on a narrow screen or at a large text size. */
+.user-label {
+  font-size: var(--wa-font-size-s);
+  overflow-wrap: anywhere;
+}
+
+/* The sign-in screens: a narrow column, with room for the QR code. */
+.auth-page {
+  max-inline-size: 30rem;
+}
+
+.auth-page h1:focus {
+  outline: none;
+}
+
+.auth-page wa-qr-code {
+  align-self: center;
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wa-space-s);
+  margin: 0;
+  padding: var(--wa-space-m);
+  list-style: none;
+}
+
+/* Underline links so they are not identified by colour alone. */
+.nav-list a {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+/* The maker's credit: small and quiet, so the council's own name leads, but legible
+   (it must pass the contrast check) and a real link. */
+.credit {
+  margin: 0;
+  padding: var(--wa-space-m);
+  font-size: var(--wa-font-size-s);
+  color: var(--wa-color-text-quiet);
+}
+
+.credit a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+a:focus-visible,
+main:focus-visible {
+  outline: var(--wa-focus-ring);
+  outline-offset: var(--wa-focus-ring-offset);
+}
+
+/* The router focuses <main> on navigation; a ring around the whole page is noise. */
+main:focus {
+  outline: none;
+}
+
+/* Web Awesome's native styles pad <main>. Views own their spacing (.page), and the
+   map must reach the edges. */
+main {
+  padding: 0;
+}
+
+.page {
+  max-inline-size: 45rem;
+  margin-inline: auto;
+  padding: var(--wa-space-l) var(--wa-space-m);
+}
+
+/* A wider page for the People table. */
+.page-wide {
+  max-inline-size: 70rem;
+}
+
+/* A table is allowed to scroll sideways on a narrow screen rather than reflow. It is
+   positioned so the visually hidden button labels inside it are clipped with it; they
+   would otherwise be placed against the page and widen it. */
+.table-scroll {
+  position: relative;
+  overflow-x: auto;
+}
+
+.people-table {
+  inline-size: 100%;
+  border-collapse: collapse;
+}
+
+.people-table th,
+.people-table td {
+  padding: var(--wa-space-xs) var(--wa-space-s);
+  text-align: start;
+  vertical-align: top;
+  border-block-end: 1px solid var(--wa-color-neutral-border-quiet, #ccc);
+}
+
+.people-table td.point-actions {
+  margin: 0;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wa-space-3xs);
+}
+
+.field-select {
+  padding: var(--wa-space-xs);
+  font: inherit;
+}
+
+[data-people-link][hidden],
+[data-audit-link][hidden] {
+  display: none;
+}
+
+.point-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wa-space-m);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.point-item {
+  padding: var(--wa-space-m);
+  border: var(--wa-border-width-s) var(--wa-border-style)
+    var(--wa-color-surface-border);
+  border-radius: var(--wa-border-radius-m);
+}
+
+.point-item p,
+.point-title {
+  margin: 0;
+}
+
+.point-title {
+  font-size: var(--wa-font-size-l);
+}
+
+.point-item p + p {
+  margin-block-start: var(--wa-space-xs);
+}
+
+.point-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--wa-space-xs);
+  margin-block-start: var(--wa-space-s);
+}
+
+/* Projects: a tree of bordered items, each sub-project nested inside its parent. */
+.project-tree {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wa-space-m);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-item > .project-tree {
+  margin-block-start: var(--wa-space-m);
+}
+
+.project-meta {
+  font-size: var(--wa-font-size-s);
+}
+
+/* A project's page: breadcrumbs, the actions board and the notes. */
+.page-board {
+  max-inline-size: 90rem;
+}
+
+.crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--wa-space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* The separator is decoration, so it has an empty text alternative. */
+.crumbs li + li::before {
+  content: "›" / "";
+  margin-inline-end: var(--wa-space-xs);
+}
+
+/* Lanes stack on a phone. From a tablet up they sit side by side at a readable width,
+   and the board scrolls sideways (a focusable region, so the keyboard can scroll it)
+   rather than squeezing five narrow columns beside the side navigation. */
+.board-scroll {
+  position: relative;
+  overflow-x: auto;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--wa-space-m);
+}
+
+@media (min-width: 48rem) {
+  .board {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(16rem, 1fr);
+  }
+}
+
+.lane {
+  min-inline-size: 0;
+  padding: var(--wa-space-s);
+  border: var(--wa-border-width-s) var(--wa-border-style)
+    var(--wa-color-surface-border);
+  border-radius: var(--wa-border-radius-m);
+}
+
+.lane-title {
+  margin: 0 0 var(--wa-space-s);
+  font-size: var(--wa-font-size-m);
+}
+
+.lane-cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wa-space-s);
+  min-block-size: 3rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* A dashed outline as well as any colour, so the drop target is not colour-only. */
+.lane-cards.is-drop-target {
+  outline: 2px dashed currentColor;
+  outline-offset: 2px;
+}
+
+.lane-empty {
+  font-size: var(--wa-font-size-s);
+}
+
+.action-card {
+  min-inline-size: 0;
+  padding: var(--wa-space-s);
+  border: var(--wa-border-width-s) var(--wa-border-style)
+    var(--wa-color-surface-border);
+  border-radius: var(--wa-border-radius-m);
+  overflow-wrap: anywhere;
+}
+
+.action-card[draggable="true"] {
+  cursor: grab;
+}
+
+.action-card.is-dragging {
+  opacity: 0.5;
+}
+
+.action-title {
+  margin: 0;
+  font-size: var(--wa-font-size-m);
+}
+
+.action-meta,
+.action-details {
+  margin: var(--wa-space-2xs) 0 0;
+  font-size: var(--wa-font-size-s);
+}
+
+.action-details,
+.note-body {
+  white-space: pre-wrap;
+}
+
+.action-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: var(--wa-space-xs);
+  margin-block-start: var(--wa-space-s);
+}
+
+.action-controls .field {
+  flex: 1 1 100%;
+}
+
+.action-controls .field-select {
+  max-inline-size: 100%;
+}
+
+.note-body {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.field[hidden] {
+  display: none;
+}
+
+/* The places checklist in the project and action dialogs. */
+.feature-picker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wa-space-xs);
+  min-inline-size: 0;
+  margin: 0;
+  padding: var(--wa-space-s);
+  border: var(--wa-border-width-s) var(--wa-border-style)
+    var(--wa-color-surface-border);
+  border-radius: var(--wa-border-radius-m);
+}
+
+.feature-list {
+  max-block-size: 12rem;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.feature-list li {
+  padding-block: var(--wa-space-3xs);
+  overflow-wrap: anywhere;
+}
+
+.field-note {
+  margin: 0;
+  font-size: var(--wa-font-size-s);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wa-space-m);
+}
+
+/* ── Map page ──────────────────────────────────────────────────────────────── */
+
+/* Leaflet needs a definite height. The header is sticky and the page scrolls
+   beneath it, so the map page takes the viewport minus the header. */
+.map-page {
+  display: flex;
+  flex-direction: column;
+  /* wa-page measures its header and publishes it as --header-height. */
+  block-size: calc(100dvh - var(--header-height, 3.5rem));
+  min-block-size: 24rem;
+}
+
+/* Compact on phones: three small buttons share one row. Wrapping remains as the
+   fallback for very narrow screens and large text sizes. */
+.map-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--wa-space-xs);
+  padding: var(--wa-space-xs) var(--wa-space-s);
+}
+
+/* A group of buttons that sits in the toolbar and wraps as one. */
+.map-toolbar-row:not([hidden]) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--wa-space-xs);
+}
+
+/* Shown only while picking; takes its own row so it never squeezes the buttons. */
+.map-status {
+  flex-basis: 100%;
+  margin: 0;
+}
+
+.map {
+  flex: 1;
+  min-block-size: 0;
+}
+
+.map.is-picking {
+  cursor: crosshair;
+}
+
+/* wc-location-field's own map inside the Add a point dialog: shorter than its default
+   so the whole form fits on a phone. */
+wc-location-field {
+  --lf-map-height: 12rem;
+}
+
+.form-error {
+  margin: 0;
+  color: var(--wa-color-danger-on-quiet, var(--wa-color-danger-600));
+  font-weight: var(--wa-font-weight-semibold);
+}
+
+/* Markers: a shape and outline as well as a colour, so meaning is not colour-only. */
+.map-pin-dot {
+  display: block;
+  inline-size: 24px;
+  block-size: 24px;
+  box-sizing: border-box;
+  border: 3px solid #fff;
+  border-radius: 50% 50% 50% 0;
+  background: var(--wa-color-brand-fill-loud, #1b6ac9);
+  box-shadow: 0 0 0 1px #000;
+  transform: rotate(-45deg);
+}
+
+.point-popup p {
+  margin: 0.25rem 0;
+}
+
+/* prefers-reduced-motion is honoured for the map in map/map.js, where Leaflet's
+   zoom, fade and marker animations are switched off. */

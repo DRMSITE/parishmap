@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="%APP_DESCRIPTION%" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="generator" content="ParishMap by DRMSITE LTD" />
+    <title>%APP_NAME%</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body class="wa-theme-default">
+    <!-- wa-page provides the skip link, the sticky header and, below 768px, turns
+         the navigation slot into a drawer with its own toggle button. -->
+    <wa-page mobile-breakpoint="768">
+      <header slot="header">
+        <a class="brand" href="/">%APP_NAME%</a>
+        <!-- Shown once someone is signed in (see boot/common.js showChrome). -->
+        <div class="user-bar" data-chrome hidden>
+          <span class="user-label" data-user-label></span>
+          <wa-button appearance="outlined" size="s" data-sign-out>Sign out</wa-button>
+        </div>
+      </header>
+      <!-- Our own toggle, because the default hamburger has no accessible name.
+           The label goes on the icon (see CLAUDE.md, Web Awesome notes). -->
+      <wa-button slot="navigation-toggle" appearance="plain" size="s" data-chrome hidden>
+        <wa-icon name="bars" label="Open menu"></wa-icon>
+      </wa-button>
+      <nav slot="navigation" aria-label="Main" data-chrome hidden>
+        <ul class="nav-list">
+          <li><a href="/">Map</a></li>
+          <li><a href="/list">Points</a></li>
+          <li><a href="/projects">Projects</a></li>
+          <li data-people-link hidden><a href="/people">People</a></li>
+          <li data-audit-link hidden><a href="/activity">Activity</a></li>
+          <li><a href="/help">Help</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+        <!-- The credit stays: see NOTICE. Kept small, and quiet in colour, so the council's own name leads. -->
+        <p class="credit">ParishMap, built by <a href="https://drmsite.com" rel="noopener">DRMSITE LTD</a></p>
+      </nav>
+      <!-- tabindex="-1" lets the router move focus here after each navigation. The id
+           matches the target of wa-page's built-in skip link. -->
+      <main id="main-content" tabindex="-1"></main>
+    </wa-page>
+    <div id="announcer" class="visually-hidden" role="status" aria-live="polite"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

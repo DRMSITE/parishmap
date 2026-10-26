@@ -1,0 +1,26 @@
+node_modules/
+dist/
+dist-secure/
+dist-shots/
+*-debug.log
+.env
+.env.*
+!.env.example
+test-results/
+playwright-report/
+.idea/
+.claude/worktrees/
+
+# Local copies of the people list (see scripts/export-people.mjs) and the Firebase CLI cache
+people-*.csv
+.firebase/
+
+# Everything specific to one council (see deployment.example/)
+deployment/
+
+# Per-council Firebase project (copy .firebaserc.example, or run `firebase use`)
+.firebaserc
+
+# Generated from firebase.template.json and the deployment settings (npm run generate)
+firebase.json
+functions/tiles.config.json

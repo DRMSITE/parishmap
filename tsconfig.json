@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "strict": true,
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "types": ["vite/client"],
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "paths": { "@deployment/*": ["./deployment.example/*"] }
+  },
+  "include": [
+    "src",
+    "test",
+    "test-rules",
+    "deployment.example",
+    "vite.config.js",
+    "vitest.rules.config.js"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "name": "parishmap",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A private, login-only map and project planner for parish, town and community councils, built on Firebase, Leaflet and Web Awesome.",
+  "license": "AGPL-3.0-or-later",
+  "author": "DRMSITE LTD (https://drmsite.com)",
+  "homepage": "https://github.com/DRMSITE/parishmap",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DRMSITE/parishmap.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DRMSITE/parishmap/issues"
+  },
+  "scripts": {
+    "dev": "vite",
+    "setup": "node scripts/setup.mjs",
+    "licences": "node scripts/licences.mjs",
+    "licences:check": "node scripts/licences.mjs --check",
+    "configure-auth": "node scripts/configure-auth.mjs",
+    "generate": "node scripts/generate-config.mjs",
+    "prebuild": "npm run generate",
+    "build": "vite build",
+    "check:dist": "node scripts/check-dist.mjs",
+    "preview": "vite preview",
+    "typecheck": "tsc",
+    "lint": "biome lint .",
+    "format": "biome format --write .",
+    "test": "vitest run",
+    "pretest:rules": "npm run generate",
+    "test:rules": "firebase emulators:exec --only firestore --project demo-parishmap \"vitest run --config vitest.rules.config.js\"",
+    "pretest:e2e": "npm run generate",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@annoyingmouse/wc-location-field": "^1.2.0",
+    "@awesome.me/webawesome": "^3.14.0",
+    "firebase": "^13.0.0",
+    "leaflet": "^1.9.4"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@biomejs/biome": "^2.5.14",
+    "@firebase/rules-unit-testing": "^6.0.0",
+    "@playwright/test": "^1.63.0",
+    "@types/leaflet": "^1.9.22",
+    "firebase-admin": "^14.5.0",
+    "jsdom": "^30.1.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.1",
+    "vitest": "^5.0.2"
+  }
+}
