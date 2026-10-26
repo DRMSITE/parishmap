@@ -16,6 +16,7 @@ jobs:
   checks:
     name: Types, lint, unit tests and build
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -34,6 +35,7 @@ jobs:
   e2e:
     name: Browser tests and accessibility
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -53,6 +55,7 @@ jobs:
   rules:
     name: Firestore rules (emulator)
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

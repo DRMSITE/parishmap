@@ -15,6 +15,7 @@ jobs:
     name: Analyse JavaScript
     runs-on: ubuntu-latest
     permissions:
+      actions: read # CodeQL looks up its own run; private repositories need this
       contents: read
       security-events: write
     steps:
