@@ -158,7 +158,7 @@ test("the location field moves the pin and keeps the coordinate inputs in sync",
   await stubNominatim(page);
   const unpkg = /** @type {string[]} */ ([]);
   page.on("request", (r) => {
-    if (r.url().includes("unpkg.com")) unpkg.push(r.url());
+    if (new URL(r.url()).hostname === "unpkg.com") unpkg.push(r.url());
   });
 
   await page.goto("/");
@@ -353,7 +353,7 @@ test("editing from a deep-linked list uses the bundled Leaflet and shows the pin
   await addPoint(page, "Old oak");
   const unpkg = /** @type {string[]} */ ([]);
   page.on("request", (r) => {
-    if (r.url().includes("unpkg.com")) unpkg.push(r.url());
+    if (new URL(r.url()).hostname === "unpkg.com") unpkg.push(r.url());
   });
 
   // A fresh load of /list: the map page has never run, so Leaflet is not yet loaded.
