@@ -22,6 +22,8 @@ Some risks cannot be removed by software, and it is better to know them before t
 
 - **Someone with a valid account doing something they are allowed to.** A councillor can see what councillors can see, and can copy it. The audit log covers account changes, not every map or project edit (those carry the author and last-changed time).
 - **A stolen phone or compromised authenticator.** An administrator or the Clerk can reset a person's authenticator and sign them out everywhere, though they must do so promptly for that to help.
+- **A short delay after removing someone.** Disabling a person or changing their role takes effect at once for the `api` and `tiles` functions, which check for revoked sign-ins. Firestore's rules read the role from the sign-in token the person already holds, so that token keeps working for the map and projects until Firebase renews it, which is within about an hour. Closing that gap would need a status check on every read, which ParishMap does not do.
+- **A partly recorded account change.** An account change and its entry in the audit log are two separate writes. If the second fails, the change has still happened and the person who made it sees an error. Check the People page before trying again.
 - **A compromised administrator or Google account.** Protect those accounts, keep at least two administrators, and use a strong password and a second factor on the Google account that owns the Firebase project. The rules cannot defend a project from the person who owns it.
 - **Denial of service and cost abuse.** There is a cap on function instances and you should set a budget alert, but there is no per-person rate limit.
 - **Bad data in a backup.** Deleted data stays in backups until they expire.
