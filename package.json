@@ -1,6 +1,6 @@
 {
   "name": "parishmap",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "type": "module",
   "description": "A private, login-only map and project planner for parish, town and community councils, built on Firebase, Leaflet and Web Awesome.",

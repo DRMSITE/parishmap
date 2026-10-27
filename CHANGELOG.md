@@ -5,6 +5,32 @@ All notable changes are recorded here. The format follows
 [Semantic Versioning](https://semver.org/) once it reaches 1.0. A release that changes
 `firestore.rules` says so, because the rules must be deployed with it.
 
+## [0.1.1] - 2026-10-27
+
+This release changes `firestore.rules`, so deploy them with it:
+`firebase deploy --only firestore:rules --project <your-project-id>`. Existing data is not
+affected, because the rules only check new writes.
+
+### Security
+
+- A councillor adding a sub-project must now use their own sign-in email as the responsible
+  person's email. Before, any text was accepted.
+- An action's due date must now be written `YYYY-MM-DD`. Before, any ten characters were accepted.
+- Updated `body-parser` in the Cloud Functions to fix a published denial-of-service advisory.
+
+### Added
+
+- A test that fails if the example text `npm run check:dist` looks for goes out of step with the
+  local-data example projects, so that check cannot quietly stop working.
+- Continuous integration now installs the Cloud Functions' dependencies and audits them for
+  high-severity advisories.
+
+### Documentation
+
+- The security page now says that someone's role or disabled state takes up to about an hour to
+  reach the map and projects, because the database rules read it from the sign-in they already
+  hold, and that an account change and its audit-log entry are separate writes.
+
 ## [0.1.0] - 2026-10-26 (first public release)
 
 ### Added
