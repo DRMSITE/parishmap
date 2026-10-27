@@ -187,6 +187,16 @@ describe("creating a project", () => {
       );
     });
 
+    it("refuses the responsible councillor using someone else's email", async () => {
+      const user = userContext(env, "lead", { role: "councillor" });
+      await assertFails(
+        setDoc(
+          ref(user, "projects", "s1"),
+          sub("lead", { responsibleEmail: "u2@example.org" }),
+        ),
+      );
+    });
+
     it("refuses a parent that does not exist", async () => {
       const user = userContext(env, "lead", { role: "councillor" });
       await assertFails(
@@ -411,6 +421,7 @@ describe("creating an action", () => {
     ["an assignee with no email", { assigneeUid: "u3" }],
     ["an email with no assignee", { assigneeEmail: "u3@example.org" }],
     ["a badly formed due date", { dueDate: "1 Dec" }],
+    ["a due date of the right length but wrong shape", { dueDate: "not-a-date" }],
     ["more than 20 linked features", { featureIds: Array(21).fill("f") }],
   ])("refuses %s", (_name, overrides) => {
     it("as a councillor", async () => {
