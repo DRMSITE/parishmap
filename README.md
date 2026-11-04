@@ -12,7 +12,7 @@ Built by [DRMSITE LTD](https://drmsite.com) and released under the
 
 **Featured on SilentStars.** ParishMap has been featured on SilentStars, a platform highlighting independently developed open-source projects. [View ParishMap on SilentStars](https://silentstars.dev/projects/drmsite--parishmap/).
 
-> **Status: pre-release (0.1.1).** It was built for one parish council's own use. I have followed this packaging once myself, from a fresh clone to a signed-in administrator on a new Firebase project, and fixed what I found, but nobody else has yet. The Ordnance Survey provider and the tile function's refusal of out-of-area tiles have been tested in code only, not on a live site. Expect rough edges in the set-up, and please [report them](https://github.com/DRMSITE/parishmap/issues). See [what it does not do](#what-it-does-not-do).
+> **Status: pre-release (0.1.2).** It was built for one parish council's own use. I have followed this packaging once myself, from a fresh clone to a signed-in administrator on a new Firebase project, and fixed what I found, but nobody else has yet. The Ordnance Survey provider and the tile function's refusal of out-of-area tiles have been tested in code only, not on a live site. Expect rough edges in the set-up, and please [report them](https://github.com/DRMSITE/parishmap/issues). See [what it does not do](#what-it-does-not-do).
 
 ## What it does
 

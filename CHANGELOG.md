@@ -5,6 +5,30 @@ All notable changes are recorded here. The format follows
 [Semantic Versioning](https://semver.org/) once it reaches 1.0. A release that changes
 `firestore.rules` says so, because the rules must be deployed with it.
 
+## [0.1.2] - 2026-11-04
+
+This release does not change `firestore.rules`. The Cloud Functions' code changed slightly (see
+Changed), so redeploy them as well as the site.
+
+### Changed
+
+- Code clean-up following a static-analysis review: the email checks in the `api` function and
+  the People page, the council-name, storage-prefix, licence and trailing-slash checks no longer
+  use regular expressions that could run slowly on odd input; promises that are deliberately not
+  awaited are marked as such; the sign-in screens' `valueOf` helper is now `fieldValue`.
+- The project page reads the project's identifier once before listing its sub-projects.
+- Linting uses Biome's recommended rules, with a documented exception for the bundled icons.
+
+### Added
+
+- `npm run test:coverage` writes a coverage report for the unit tests.
+- A `.opensource/project.json` file describing the project.
+
+### Documentation
+
+- Tidier set-up, configuration, roles, tile-provider and data-protection pages, and a corrected
+  path to the Firebase set-up guide in the README.
+
 ## [0.1.1] - 2026-10-27
 
 This release changes `firestore.rules`, so deploy them with it:
