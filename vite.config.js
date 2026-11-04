@@ -31,6 +31,13 @@ export default defineConfig(({ mode }) => {
     test: {
       environment: "jsdom",
       include: ["test/**/*.test.js"],
+      // Only for `npm run test:coverage`, which feeds SonarQube. Code covered by the browser
+      // and emulator tests (e2e/, test-rules/) does not show here.
+      coverage: {
+        provider: "v8",
+        reporter: ["text-summary", "lcov"],
+        include: ["src/**/*.js", "functions/*-handler.js"],
+      },
     },
   };
 });

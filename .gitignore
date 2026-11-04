@@ -24,3 +24,6 @@ deployment/
 # Generated from firebase.template.json and the deployment settings (npm run generate)
 firebase.json
 functions/tiles.config.json
+
+# Unit-test coverage report (npm run test:coverage), read by SonarQube
+coverage/

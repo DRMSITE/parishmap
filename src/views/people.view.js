@@ -9,6 +9,19 @@ import { confirmAction } from "../ui/confirm.js";
 
 /** @typedef {import("../types.js").Person} Person */
 
+/**
+ * Rough shape check for the email box (the function checks again, and Firebase is strict).
+ * Plain string tests, because a pattern over typed input can backtrack badly.
+ * @param {string} email
+ */
+function looksLikeEmail(email) {
+  const at = email.indexOf("@");
+  if (at < 1 || email.indexOf("@", at + 1) !== -1 || /\s/.test(email))
+    return false;
+  const dot = email.indexOf(".", at + 2);
+  return dot !== -1 && dot < email.length - 1;
+}
+
 /** @param {Person} person */
 function statusOf(person) {
   if (person.disabled) return "Disabled";
@@ -64,7 +77,7 @@ function askPerson({ label, confirmText, askEmail, roles, currentRole }) {
       const role = /** @type {HTMLSelectElement} */ (
         form.querySelector('[name="role"]')
       ).value;
-      if (askEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      if (askEmail && !looksLikeEmail(email)) {
         error.textContent = "Enter a valid email address.";
         error.hidden = false;
         return;

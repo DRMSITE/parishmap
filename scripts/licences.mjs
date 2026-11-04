@@ -37,12 +37,12 @@ const COMPATIBLE = new Set([
  * @param {string} expression
  */
 export function isCompatible(expression) {
-  const text = expression.replace(/[()]/g, " ").trim();
+  const text = expression.replace(/[()]/g, " ").replace(/\s+/g, " ").trim();
   if (!text) return false;
   return text
-    .split(/\s+OR\s+/i)
+    .split(/ OR /i)
     .some((choice) =>
-      choice.split(/\s+AND\s+/i).every((id) => COMPATIBLE.has(id.trim())),
+      choice.split(/ AND /i).every((id) => COMPATIBLE.has(id.trim())),
     );
 }
 

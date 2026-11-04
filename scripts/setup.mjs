@@ -98,7 +98,7 @@ async function ask() {
     "Centre as latitude, longitude (e.g. 52.3947, 0.2109):",
     {
       check: (v) => {
-        const m = /^(-?\d+(?:\.\d+)?)\s*[, ]\s*(-?\d+(?:\.\d+)?)$/.exec(v);
+        const m = /^(-?\d+(?:\.\d+)?)(?:\s*,\s*|\s+)(-?\d+(?:\.\d+)?)$/.exec(v);
         if (!m) return "Two numbers, like 52.3947, 0.2109.";
         return Math.abs(Number(m[1])) <= 90 && Math.abs(Number(m[2])) <= 180
           ? null

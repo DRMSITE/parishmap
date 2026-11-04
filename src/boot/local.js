@@ -44,5 +44,5 @@ export function start({ outlet, announcer }) {
   });
   showChrome(true);
   showRoleLinks({ people: true, audit: true });
-  router.start();
+  void router.start();
 }

@@ -255,8 +255,9 @@ export function representativePoint(geometry) {
       : geometry.coordinates.map((polygon) => polygon[0]);
   const largest = outerRings
     .map(ringCentroid)
-    .reduce((best, candidate) =>
-      candidate.area > best.area ? candidate : best,
+    .reduce(
+      (best, candidate) => (candidate.area > best.area ? candidate : best),
+      { area: -1, lat: Number.NaN, lng: Number.NaN },
     );
   if (largest.area > 0 && Number.isFinite(largest.lat + largest.lng))
     return { lat: largest.lat, lng: largest.lng };

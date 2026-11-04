@@ -13,16 +13,19 @@ const KINDS = ["parish", "town", "community"];
  */
 export function deriveCouncil(name) {
   const text = name.trim().replace(/\s+/g, " ");
-  const full = /^(.+?)\s+(Parish|Town|Community)\s+Council$/i.exec(text);
-  if (full)
+  // Split on single spaces rather than matching a pattern: the text is already
+  // normalised, and a lazy regex over user input can backtrack badly.
+  const words = text.split(" ");
+  if (words.length < 2 || words[words.length - 1].toLowerCase() !== "council")
+    return { area: text, kind: null };
+  const beforeCouncil = words.slice(0, -1);
+  const kind = beforeCouncil[beforeCouncil.length - 1].toLowerCase();
+  if (beforeCouncil.length >= 2 && isKind(kind))
     return {
-      area: full[1],
-      kind: /** @type {"parish" | "town" | "community"} */ (
-        full[2].toLowerCase()
-      ),
+      area: beforeCouncil.slice(0, -1).join(" "),
+      kind: /** @type {"parish" | "town" | "community"} */ (kind),
     };
-  const plain = /^(.+?)\s+Council$/i.exec(text);
-  return { area: plain ? plain[1] : text, kind: null };
+  return { area: beforeCouncil.join(" "), kind: null };
 }
 
 /** @param {string} value */
@@ -35,11 +38,13 @@ export function isKind(value) {
  * @param {string} area
  */
 export function storagePrefixFor(area) {
-  const slug = area
+  // Runs of other characters become one dash, so at most one can sit at each end.
+  let slug = area
     .toLowerCase()
     .normalize("NFKD")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+    .replace(/[^a-z0-9]+/g, "-");
+  if (slug.startsWith("-")) slug = slug.slice(1);
+  if (slug.endsWith("-")) slug = slug.slice(0, -1);
   return `${slug || "parish"}-map:`;
 }
 

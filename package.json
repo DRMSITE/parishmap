@@ -17,6 +17,7 @@
   "scripts": {
     "dev": "vite",
     "setup": "node scripts/setup.mjs",
+    "test:coverage": "vitest run --coverage",
     "licences": "node scripts/licences.mjs",
     "licences:check": "node scripts/licences.mjs --check",
     "configure-auth": "node scripts/configure-auth.mjs",
@@ -46,6 +47,7 @@
     "@firebase/rules-unit-testing": "^6.0.0",
     "@playwright/test": "^1.63.0",
     "@types/leaflet": "^1.9.22",
+    "@vitest/coverage-v8": "^5.0.5",
     "firebase-admin": "^14.5.0",
     "jsdom": "^30.1.1",
     "typescript": "^7.0.2",

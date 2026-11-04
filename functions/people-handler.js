@@ -21,7 +21,19 @@ const MANAGERS = ["admin", "clerk"];
 /** Roles that take part in projects: they may see each other in the directory. */
 const DIRECTORY_ROLES = ["admin", "clerk", "councillor"];
 
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+/**
+ * Rough shape check: one "@" with something either side, a dot after it that is neither
+ * first nor last in the domain, and no spaces. Plain string tests, because a pattern over
+ * input from the network can backtrack badly. Firebase does the strict check.
+ * @param {string} email
+ */
+function looksLikeEmail(email) {
+  const at = email.indexOf("@");
+  if (at < 1 || email.indexOf("@", at + 1) !== -1 || /\s/.test(email))
+    return false;
+  const dot = email.indexOf(".", at + 2);
+  return dot !== -1 && dot < email.length - 1;
+}
 const UID_PATTERN = /^[A-Za-z0-9]{1,128}$/;
 
 /**
@@ -142,7 +154,7 @@ export async function handlePeopleRequest(request, deps) {
     const email =
       typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
     const role = typeof body.role === "string" ? body.role : "";
-    if (email.length > 254 || !EMAIL_PATTERN.test(email))
+    if (email.length > 254 || !looksLikeEmail(email))
       return refuse(400, "Enter a valid email address.");
     if (!assignableRoles(caller.role).includes(role))
       return refuse(403, "You cannot give that role.");

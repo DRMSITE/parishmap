@@ -216,7 +216,7 @@ export function render(container, ctx) {
   const unsubscribe = ctx.data.subscribe?.(() => void refreshMarkers());
   if (unsubscribe) disposers.push(unsubscribe);
 
-  handle.ready.then(async (readyMap) => {
+  void handle.ready.then(async (readyMap) => {
     map = readyMap;
     await refreshProjects();
     await refreshMarkers();

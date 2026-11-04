@@ -19,7 +19,9 @@ export function stripBase(pathname, base) {
       : pathname;
   const path = stripped === "" ? "/" : stripped;
   // "/about/" and "/about" are the same page.
-  return path.length > 1 ? path.replace(/\/+$/, "") : path;
+  let end = path.length;
+  while (end > 1 && path[end - 1] === "/") end--;
+  return path.slice(0, end);
 }
 
 /**

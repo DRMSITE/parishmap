@@ -15,4 +15,4 @@ const boot =
     ? import("./boot/local.js")
     : import("./boot/secure.js");
 
-boot.then(({ start }) => start({ outlet, announcer }));
+void boot.then(({ start }) => start({ outlet, announcer }));
