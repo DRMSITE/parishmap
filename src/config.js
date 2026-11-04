@@ -56,7 +56,9 @@ export function checkParishConfig(raw) {
   if (!Number.isFinite(given.minZoom))
     problems.push("minZoom must be a number.");
   if (!isText(given.storagePrefix))
-    problems.push('storagePrefix must be some text, such as "exampleton-map:".');
+    problems.push(
+      'storagePrefix must be some text, such as "exampleton-map:".',
+    );
 
   const b = given.bounds;
   const boundsOk =
@@ -66,7 +68,9 @@ export function checkParishConfig(raw) {
       "bounds must be [[south, west], [north, east]] as latitudes and longitudes.",
     );
   } else if (b[0][0] >= b[1][0] || b[0][1] >= b[1][1]) {
-    problems.push("bounds: the south-west corner must be south and west of the north-east.");
+    problems.push(
+      "bounds: the south-west corner must be south and west of the north-east.",
+    );
   }
   if (boundsOk && isLatLng(given.centre)) {
     const [lat, lng] = given.centre;

@@ -3,12 +3,12 @@
 A public repository cannot hold the particulars of one council, so everything specific to yours lives in a few files outside it. None is committed to the public
 repository, so you can keep them in a private fork or keep them to yourself.
 
-| What | Where | Made by |
-| --- | --- | --- |
-| The council's name, map area, tiles and region | `deployment/parish.config.js` | `npm run setup` |
-| The council boundary (optional) | `deployment/boundary.geojson` | you |
-| Firebase's web settings | `.env` | `npm run setup` |
-| Which Firebase project to deploy to | `.firebaserc` | `npm run setup` or `firebase use` |
+| What                                           | Where                         | Made by                           |
+| ---------------------------------------------- | ----------------------------- | --------------------------------- |
+| The council's name, map area, tiles and region | `deployment/parish.config.js` | `npm run setup`                   |
+| The council boundary (optional)                | `deployment/boundary.geojson` | you                               |
+| Firebase's web settings                        | `.env`                        | `npm run setup`                   |
+| Which Firebase project to deploy to            | `.firebaserc`                 | `npm run setup` or `firebase use` |
 
 If `deployment/` does not exist, the code, the tests and the build use `deployment.example/`, a
 made-up "Exampleton". That is why a fresh clone builds.
@@ -22,23 +22,26 @@ This file sets the council's name, where the map opens and how far it may wander
 
 ```js
 export default {
-  appName: "Exampleton Parish Map",       // header, sign-in screen, page title
+  appName: "Exampleton Parish Map", // header, sign-in screen, page title
   council: {
     name: "Exampleton Parish Council",
-    area: "Exampleton",                   // as used in sentences: "the map covers Exampleton"
-    kind: "parish",                       // "parish", "town" or "community"
+    area: "Exampleton", // as used in sentences: "the map covers Exampleton"
+    kind: "parish", // "parish", "town" or "community"
     // clerkTitle: "Parish Clerk",        // defaults to "Parish Clerk", "Town Clerk" or "Community Clerk"
   },
 
-  centre: [52.3947, 0.2109],              // where the map opens: [latitude, longitude]
-  zoom: 14,                               // starting zoom
-  minZoom: 13,                            // furthest out the map may be zoomed
-  bounds: [[52.34, 0.02], [52.45, 0.4]],  // [south-west, north-east]
+  centre: [52.3947, 0.2109], // where the map opens: [latitude, longitude]
+  zoom: 14, // starting zoom
+  minZoom: 13, // furthest out the map may be zoomed
+  bounds: [
+    [52.34, 0.02],
+    [52.45, 0.4],
+  ], // [south-west, north-east]
 
-  storagePrefix: "exampleton-map:",       // keeps browser storage apart from other sites
+  storagePrefix: "exampleton-map:", // keeps browser storage apart from other sites
   // sourceUrl: "https://..."            // only if you run a modified copy: where its source is offered from
-  region: "europe-west2",                 // where the Cloud Functions run
-  tiles: { basemap: "osm" },              // see tile-providers.md
+  region: "europe-west2", // where the Cloud Functions run
+  tiles: { basemap: "osm" }, // see tile-providers.md
 };
 ```
 
@@ -87,12 +90,12 @@ The browser has to be told which Firebase project it belongs to, and `.env` hold
 grant nothing, but anything in a `VITE_*` variable is compiled into the public site, so **never put
 a secret in one**. Restrict the browser API key by HTTP referrer in the Google Cloud console.
 
-| Variable | Notes |
-| --- | --- |
-| `VITE_FIREBASE_API_KEY`, `..._AUTH_DOMAIN`, `..._PROJECT_ID`, `..._STORAGE_BUCKET`, `..._MESSAGING_SENDER_ID`, `..._APP_ID` | From the Firebase console: Project settings, Your apps |
-| `VITE_FUNCTIONS_REGION` | Optional. Overrides `region` for the development server's proxy only |
-| `VITE_BASE_URL` | Optional. Serve the site from a sub-path, such as `/maps/` |
-| `VITE_LOCAL_DATA` | **Development and tests only.** Skips sign-in. Never set it for a real build |
+| Variable                                                                                                                    | Notes                                                                        |
+| --------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `VITE_FIREBASE_API_KEY`, `..._AUTH_DOMAIN`, `..._PROJECT_ID`, `..._STORAGE_BUCKET`, `..._MESSAGING_SENDER_ID`, `..._APP_ID` | From the Firebase console: Project settings, Your apps                       |
+| `VITE_FUNCTIONS_REGION`                                                                                                     | Optional. Overrides `region` for the development server's proxy only         |
+| `VITE_BASE_URL`                                                                                                             | Optional. Serve the site from a sub-path, such as `/maps/`                   |
+| `VITE_LOCAL_DATA`                                                                                                           | **Development and tests only.** Skips sign-in. Never set it for a real build |
 
 ## Limits you can change in code
 

@@ -57,11 +57,11 @@ Council-specific settings live in `deployment/` (see [configuration.md](configur
 
 There are three layers of test, each aimed at a different kind of mistake.
 
-| Where | What | Run |
-| --- | --- | --- |
-| `test/` | Unit tests (Vitest, jsdom) | `npm test` |
+| Where         | What                                                           | Run                  |
+| ------------- | -------------------------------------------------------------- | -------------------- |
+| `test/`       | Unit tests (Vitest, jsdom)                                     | `npm test`           |
 | `test-rules/` | Security rules and the Firestore sources, against the emulator | `npm run test:rules` |
-| `e2e/` | Playwright with axe accessibility checks, on production builds | `npm run test:e2e` |
+| `e2e/`        | Playwright with axe accessibility checks, on production builds | `npm run test:e2e`   |
 
 `e2e/csp.spec.js` applies the real Content Security Policy to the page and fails on any violation while the main screens and dialogs are used. Add to it when you add a screen that loads something new, so that the policy is checked against the new screen as well.
 

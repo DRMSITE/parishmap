@@ -5,9 +5,9 @@ import { describeChosenMap, rolesPhrase } from "../src/tiles/wording.js";
 
 describe("rolesPhrase", () => {
   it("names the roles in a sentence, with the Clerk by title", () => {
-    expect(
-      rolesPhrase(["admin", "clerk", "councillor"], "Parish Clerk"),
-    ).toBe("Councillors, the Parish Clerk and administrators");
+    expect(rolesPhrase(["admin", "clerk", "councillor"], "Parish Clerk")).toBe(
+      "Councillors, the Parish Clerk and administrators",
+    );
     expect(rolesPhrase(["admin"], "Town Clerk")).toBe("Administrators");
     expect(rolesPhrase([], "Parish Clerk")).toBe("Nobody");
   });

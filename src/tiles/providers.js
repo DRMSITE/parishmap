@@ -169,7 +169,10 @@ export function providerProblems(p) {
     out.push(`${who}: termsUrl must be a link (https) to the provider's terms`);
 
   if (p.kind === "direct") {
-    if (!isHttps(p.urlTemplate) || !hasAll(p.urlTemplate, ["{z}", "{x}", "{y}"]))
+    if (
+      !isHttps(p.urlTemplate) ||
+      !hasAll(p.urlTemplate, ["{z}", "{x}", "{y}"])
+    )
       out.push(
         `${who}: urlTemplate must be an https address containing {z}, {x} and {y}`,
       );
@@ -202,9 +205,13 @@ export function providerProblems(p) {
     if (
       !Array.isArray(p.roles) ||
       !p.roles.length ||
-      !p.roles.every((r) => /** @type {readonly string[]} */ (ROLES).includes(r))
+      !p.roles.every((r) =>
+        /** @type {readonly string[]} */ (ROLES).includes(r),
+      )
     )
-      out.push(`${who}: roles must list who may use it, from ${ROLES.join(", ")}`);
+      out.push(
+        `${who}: roles must list who may use it, from ${ROLES.join(", ")}`,
+      );
     if (!isInt(p.maxCacheSeconds, 0, MAX_CACHE_SECONDS))
       out.push(
         `${who}: maxCacheSeconds must be a number of seconds up to ${MAX_CACHE_SECONDS} (7 days)`,
@@ -248,7 +255,8 @@ export function resolveTiles(tiles = {}) {
   const basemap = tiles.basemap ?? "osm";
   /** @type {Record<string, TileProvider>} */
   const providers = { osm: { ...BUILT_IN.osm } };
-  if (basemap === "os" || tiles.overrides?.os) providers.os = { ...BUILT_IN.os };
+  if (basemap === "os" || tiles.overrides?.os)
+    providers.os = { ...BUILT_IN.os };
 
   for (const [id, change] of Object.entries(tiles.overrides ?? {})) {
     if (!providers[id]) {

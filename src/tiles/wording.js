@@ -37,7 +37,9 @@ export function describeChosenMap(tiles, clerkTitle) {
   const provider = tiles.providers[tiles.basemap];
   if (!provider || provider.id === "osm") return null;
   const everyone = provider.kind === "direct";
-  const roles = everyone ? ["councillor", "clerk", "admin", "member"] : (provider.roles ?? []);
+  const roles = everyone
+    ? ["councillor", "clerk", "admin", "member"]
+    : (provider.roles ?? []);
   return {
     label: provider.label,
     attribution: withYear(provider.attribution),

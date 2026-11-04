@@ -12,10 +12,9 @@ test("the credit is in the navigation and on the About page, legible and linked"
   const credit = page.locator("nav .credit");
   await expect(credit).toBeVisible();
   await expect(credit).toHaveText("ParishMap, built by DRMSITE LTD");
-  await expect(credit.getByRole("link", { name: "DRMSITE LTD" })).toHaveAttribute(
-    "href",
-    "https://drmsite.com",
-  );
+  await expect(
+    credit.getByRole("link", { name: "DRMSITE LTD" }),
+  ).toHaveAttribute("href", "https://drmsite.com");
 
   const about = page.getByRole("heading", { name: "About this software" });
   await expect(about).toBeVisible();
@@ -45,7 +44,9 @@ test("phone: the credit is in the menu drawer and nothing scrolls sideways", asy
   await page.getByRole("button", { name: "Open menu" }).click();
   await expect(page.locator("nav .credit")).toBeVisible();
   const overflow = await page.evaluate(
-    () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
+    () =>
+      document.documentElement.scrollWidth >
+      document.documentElement.clientWidth,
   );
   expect(overflow).toBe(false);
 });

@@ -74,7 +74,9 @@ describe("deriveCouncil", () => {
 describe("small helpers", () => {
   it("makes a storage prefix from the place", () => {
     expect(storagePrefixFor("Little Snoring")).toBe("little-snoring-map:");
-    expect(storagePrefixFor("Llanfair-ym-Muallt")).toBe("llanfair-ym-muallt-map:");
+    expect(storagePrefixFor("Llanfair-ym-Muallt")).toBe(
+      "llanfair-ym-muallt-map:",
+    );
     expect(storagePrefixFor("!!!")).toBe("parish-map:");
   });
 
@@ -89,7 +91,13 @@ describe("small helpers", () => {
 
   it("recognises usable Firebase project ids", () => {
     expect(isProjectId("little-snoring-map")).toBe(true);
-    for (const bad of ["Little", "abc", "has_underscore", "-start-hyphen", "a".repeat(31)])
+    for (const bad of [
+      "Little",
+      "abc",
+      "has_underscore",
+      "-start-hyphen",
+      "a".repeat(31),
+    ])
       expect(isProjectId(bad), bad).toBe(false);
   });
 });
@@ -155,13 +163,18 @@ describe("the files it writes", () => {
   });
 
   it("builds .env from the pasted settings, or leaves gaps for later", () => {
-    const filled = buildEnv({ ...answers, firebase: parseFirebaseSnippet(snippet) });
+    const filled = buildEnv({
+      ...answers,
+      firebase: parseFirebaseSnippet(snippet),
+    });
     expect(filled).toContain("VITE_FIREBASE_API_KEY=AIzaFake");
     expect(filled).toContain("VITE_FIREBASE_APP_ID=1:123456:web:abc");
     const blank = buildEnv(answers);
     expect(blank).toContain("VITE_FIREBASE_API_KEY=\n");
     expect(blank).toContain("VITE_FIREBASE_PROJECT_ID=little-snoring-map");
-    expect(blank).toContain("VITE_FIREBASE_AUTH_DOMAIN=little-snoring-map.firebaseapp.com");
+    expect(blank).toContain(
+      "VITE_FIREBASE_AUTH_DOMAIN=little-snoring-map.firebaseapp.com",
+    );
   });
 
   it("plans exactly three files, one of them the Firebase project", () => {
@@ -210,7 +223,10 @@ describe("configure-auth", () => {
   it("notices each setting on its own", () => {
     const set = buildPatch({});
     expect(
-      describeChanges({ ...set, client: { permissions: { disabledUserSignup: false } } }),
+      describeChanges({
+        ...set,
+        client: { permissions: { disabledUserSignup: false } },
+      }),
     ).toEqual(["turn sign-up off, so people can only be invited"]);
     expect(
       describeChanges({

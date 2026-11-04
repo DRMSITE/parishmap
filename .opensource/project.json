@@ -1,0 +1,9 @@
+{
+  "name": "ParishMap",
+  "platforms": ["Web"],
+  "content": "README.md",
+  "pages": {
+    "docs/setup.md": "Firebase Setup"
+  },
+  "related": ["DRMSITE/MealMuster"]
+}

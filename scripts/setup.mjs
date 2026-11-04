@@ -64,14 +64,22 @@ async function ask() {
         await line(`${question}${fallback ? ` [${fallback}]` : ""} `)
       ).trim();
       const value = raw || fallback || "";
-      const problem = check ? check(value) : value ? null : "Please type something.";
+      const problem = check
+        ? check(value)
+        : value
+          ? null
+          : "Please type something.";
       if (!problem) return value;
       console.log(`  ${problem}`);
     }
   }
 
-  console.log("\nParishMap set-up. Press Enter to accept a suggestion in [brackets].\n");
-  const councilName = await prompt("Council name (e.g. Exampleton Parish Council):");
+  console.log(
+    "\nParishMap set-up. Press Enter to accept a suggestion in [brackets].\n",
+  );
+  const councilName = await prompt(
+    "Council name (e.g. Exampleton Parish Council):",
+  );
   const guess = deriveCouncil(councilName);
   const area = await prompt("The place, as it appears in sentences:", {
     fallback: guess.area,
@@ -86,38 +94,47 @@ async function ask() {
   console.log(
     "\nWhere should the map open? Find the centre of your area in any map (right-click, copy the coordinates).",
   );
-  const latLng = await prompt("Centre as latitude, longitude (e.g. 52.3947, 0.2109):", {
-    check: (v) => {
-      const m = /^(-?\d+(?:\.\d+)?)\s*[, ]\s*(-?\d+(?:\.\d+)?)$/.exec(v);
-      if (!m) return "Two numbers, like 52.3947, 0.2109.";
-      return Math.abs(Number(m[1])) <= 90 && Math.abs(Number(m[2])) <= 180
-        ? null
-        : "That is not a place on Earth.";
+  const latLng = await prompt(
+    "Centre as latitude, longitude (e.g. 52.3947, 0.2109):",
+    {
+      check: (v) => {
+        const m = /^(-?\d+(?:\.\d+)?)\s*[, ]\s*(-?\d+(?:\.\d+)?)$/.exec(v);
+        if (!m) return "Two numbers, like 52.3947, 0.2109.";
+        return Math.abs(Number(m[1])) <= 90 && Math.abs(Number(m[2])) <= 180
+          ? null
+          : "That is not a place on Earth.";
+      },
     },
-  });
+  );
   const [lat, lng] = latLng.split(/[, ]+/).map(Number);
   const radiusKm = Number(
     await prompt("How far from the centre should the map reach, in km?", {
       fallback: "6",
-      check: (v) => (Number(v) > 0 && Number(v) <= 50 ? null : "A number from 1 to 50."),
+      check: (v) =>
+        Number(v) > 0 && Number(v) <= 50 ? null : "A number from 1 to 50.",
     }),
   );
   const projectId = await prompt("Firebase project id (from the console):", {
     check: (v) =>
-      isProjectId(v) ? null : "6 to 30 characters: lower case letters, digits and hyphens.",
+      isProjectId(v)
+        ? null
+        : "6 to 30 characters: lower case letters, digits and hyphens.",
   });
   const region = await prompt(
     "Where should the Cloud Functions run (europe-west2 is London; fixed once deployed)?",
     {
       fallback: "europe-west2",
-      check: (v) => (/^[a-z]+-[a-z]+\d+$/.test(v) ? null : 'Like "europe-west2".'),
+      check: (v) =>
+        /^[a-z]+-[a-z]+\d+$/.test(v) ? null : 'Like "europe-west2".',
     },
   );
 
   console.log(
     "\nIf you have already registered a web app in Firebase, paste its settings (the whole snippet),",
   );
-  console.log("then press Enter on an empty line. To do this later, just press Enter.");
+  console.log(
+    "then press Enter on an empty line. To do this later, just press Enter.",
+  );
   /** @type {string[]} */
   const lines = [];
   for (;;) {
@@ -136,14 +153,19 @@ async function ask() {
           `Those settings are for "${firebase.projectId}", not "${projectId}". Check you copied the right project.`,
         );
     } catch (error) {
-      console.log(`  ${/** @type {Error} */ (error).message} Carrying on without them.`);
+      console.log(
+        `  ${/** @type {Error} */ (error).message} Carrying on without them.`,
+      );
     }
   }
   return {
     councilName,
     area,
     kind: /** @type {"parish" | "town" | "community"} */ (kind),
-    clerkTitle: clerkTitle === `${kind[0].toUpperCase()}${kind.slice(1)} Clerk` ? undefined : clerkTitle,
+    clerkTitle:
+      clerkTitle === `${kind[0].toUpperCase()}${kind.slice(1)} Clerk`
+        ? undefined
+        : clerkTitle,
     lat,
     lng,
     radiusKm,
@@ -165,19 +187,28 @@ function fromFile(/** @type {string} */ file) {
     ...a,
   };
   if (!isKind(answers.kind)) fail('"kind" must be parish, town or community.');
-  if (!isProjectId(String(answers.projectId))) fail('"projectId" is not a usable Firebase project id.');
-  if (![answers.lat, answers.lng].every(Number.isFinite)) fail('"lat" and "lng" must be numbers.');
-  if (typeof a.firebase === "string") answers.firebase = parseFirebaseSnippet(a.firebase);
+  if (!isProjectId(String(answers.projectId)))
+    fail('"projectId" is not a usable Firebase project id.');
+  if (![answers.lat, answers.lng].every(Number.isFinite))
+    fail('"lat" and "lng" must be numbers.');
+  if (typeof a.firebase === "string")
+    answers.firebase = parseFirebaseSnippet(a.firebase);
   return answers;
 }
 
 const answers = answersFile ? fromFile(answersFile) : await ask();
 const plan = planFiles(answers);
-const [[s, w], [n, e]] = boundsFromCentre(answers.lat, answers.lng, answers.radiusKm);
+const [[s, w], [n, e]] = boundsFromCentre(
+  answers.lat,
+  answers.lng,
+  answers.radiusKm,
+);
 
 console.log("\nThis will write:");
 for (const f of plan) console.log(`  ${f.path}`);
-console.log(`The map will cover latitudes ${s} to ${n} and longitudes ${w} to ${e}.`);
+console.log(
+  `The map will cover latitudes ${s} to ${n} and longitudes ${w} to ${e}.`,
+);
 
 if (!yes) {
   const reply = (await line("Write them? (y/n) ")).trim().toLowerCase();

@@ -80,7 +80,9 @@ describe("createBasemap", () => {
       basemap: "os",
       style: "Light_3857",
     });
-    const [os] = /** @type {any} */ (createBasemap("os", councillor)).getLayers();
+    const [os] = /** @type {any} */ (
+      createBasemap("os", councillor)
+    ).getLayers();
     expect(os._url).toBe("/tiles/os/Light_3857/{z}/{x}/{y}");
   });
 

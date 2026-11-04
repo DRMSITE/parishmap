@@ -78,7 +78,9 @@ describe("resolveTiles", () => {
     expect(() =>
       resolveTiles({
         basemap: "os",
-        overrides: { os: /** @type {any} */ ({ upstream: "https://evil.example/{z}" }) },
+        overrides: {
+          os: /** @type {any} */ ({ upstream: "https://evil.example/{z}" }),
+        },
       }),
     ).toThrow(/only maxZoom, roles, cacheSeconds/);
   });

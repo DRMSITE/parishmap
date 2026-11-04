@@ -14,7 +14,13 @@ describe("isCompatible", () => {
   });
 
   it("refuses unknown, missing and restrictive licences", () => {
-    for (const id of ["", "UNKNOWN", "SEE LICENSE IN LICENSE.md", "GPL-2.0-only", "CC-BY-NC-4.0"])
+    for (const id of [
+      "",
+      "UNKNOWN",
+      "SEE LICENSE IN LICENSE.md",
+      "GPL-2.0-only",
+      "CC-BY-NC-4.0",
+    ])
       expect(isCompatible(id), id).toBe(false);
   });
 });

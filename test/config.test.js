@@ -36,7 +36,9 @@ describe("checkParishConfig", () => {
 
     const outside = valid();
     outside.centre = [10, 10];
-    expect(() => checkParishConfig(outside)).toThrow(/centre must be inside bounds/);
+    expect(() => checkParishConfig(outside)).toThrow(
+      /centre must be inside bounds/,
+    );
   });
 
   it("takes a source link only if it is an https address", () => {
@@ -85,8 +87,8 @@ describe("readFirebaseConfig", () => {
   });
 
   it("names every missing variable", () => {
-    expect(() =>
-      readFirebaseConfig({ VITE_FIREBASE_PROJECT_ID: "p" }),
-    ).toThrow(/VITE_FIREBASE_API_KEY.*VITE_FIREBASE_APP_ID/s);
+    expect(() => readFirebaseConfig({ VITE_FIREBASE_PROJECT_ID: "p" })).toThrow(
+      /VITE_FIREBASE_API_KEY.*VITE_FIREBASE_APP_ID/s,
+    );
   });
 });

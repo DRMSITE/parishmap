@@ -33,7 +33,8 @@ describe("parishPlugin", () => {
             id: "mine",
             label: "Mine",
             kind: "proxied",
-            upstream: "https://tiles.secret.example/{style}/{z}/{x}/{y}?k={key}",
+            upstream:
+              "https://tiles.secret.example/{style}/{z}/{x}/{y}?k={key}",
             secret: "MINE_KEY",
             styles: ["plain"],
             roles: ["admin"],

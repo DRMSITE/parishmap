@@ -56,18 +56,18 @@ The guide goes on to turn on sign-in, deploy, and make you the first administrat
 
 Each page answers one question, and the first is the one most people need.
 
-| | |
-| --- | --- |
-| [Setting up Firebase](docs/firebase-setup.md) | From nothing to a working site |
-| [Configuration](docs/configuration.md) | Everything in `deployment/parish.config.js` |
-| [Map tile providers](docs/tile-providers.md) | OpenStreetMap, Ordnance Survey and others; caching and key safety |
-| [Roles and permissions](docs/roles-and-permissions.md) | Who can do what |
-| [Security](docs/security.md) | How it is protected, and what it does not protect against |
-| [Data protection](docs/data-protection.md) | What is stored, and a privacy notice to adapt |
-| [Deploying and upgrading](docs/deploying-and-upgrading.md) | Releases, updates, the checks to run |
-| [Backups and restoring](docs/backups.md) | What to switch on, and how to restore |
-| [Architecture](docs/architecture.md) | How the code is organised, for contributors |
-| [For the maintainers](docs/maintainers.md) | Repository settings and the release checklist |
+|                                                            |                                                                   |
+| ---------------------------------------------------------- | ----------------------------------------------------------------- |
+| [Setting up Firebase](docs/firebase-setup.md)              | From nothing to a working site                                    |
+| [Configuration](docs/configuration.md)                     | Everything in `deployment/parish.config.js`                       |
+| [Map tile providers](docs/tile-providers.md)               | OpenStreetMap, Ordnance Survey and others; caching and key safety |
+| [Roles and permissions](docs/roles-and-permissions.md)     | Who can do what                                                   |
+| [Security](docs/security.md)                               | How it is protected, and what it does not protect against         |
+| [Data protection](docs/data-protection.md)                 | What is stored, and a privacy notice to adapt                     |
+| [Deploying and upgrading](docs/deploying-and-upgrading.md) | Releases, updates, the checks to run                              |
+| [Backups and restoring](docs/backups.md)                   | What to switch on, and how to restore                             |
+| [Architecture](docs/architecture.md)                       | How the code is organised, for contributors                       |
+| [For the maintainers](docs/maintainers.md)                 | Repository settings and the release checklist                     |
 
 ## What it does not do
 

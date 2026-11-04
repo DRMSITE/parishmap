@@ -8,23 +8,23 @@ Everyone, whatever their role, must have verified their email address and signed
 
 Four roles cover the people a parish council is likely to have, from the person who runs the system to an adviser who only reads.
 
-| Role | Who it is for |
-| --- | --- |
+| Role              | Who it is for                                                                      |
+| ----------------- | ---------------------------------------------------------------------------------- |
 | **Administrator** | The person who looks after the system (and ideally a second one, in case of loss). |
-| **Clerk** | The council's clerk (the title shown is configurable). Runs the day-to-day. |
-| **Councillor** | Elected members who contribute and take responsibility for projects. |
-| **Member** | People who only need to look, such as an adviser. |
+| **Clerk**         | The council's clerk (the title shown is configurable). Runs the day-to-day.        |
+| **Councillor**    | Elected members who contribute and take responsibility for projects.               |
+| **Member**        | People who only need to look, such as an adviser.                                  |
 
 ## The map
 
 On the map, councillors may add and change their own work, while administrators and the Clerk may change anyone's.
 
-| | Administrator, Clerk | Councillor | Member |
-| --- | --- | --- | --- |
-| See points, lines, areas and the boundary | yes | yes | yes |
-| Add a point, line or area | yes | yes | no |
-| Edit or delete | anything | their own | no |
-| See the provider map you chose | by the provider's roles (default: administrator, clerk, councillor) | | |
+|                                           | Administrator, Clerk                                                | Councillor | Member |
+| ----------------------------------------- | ------------------------------------------------------------------- | ---------- | ------ |
+| See points, lines, areas and the boundary | yes                                                                 | yes        | yes    |
+| Add a point, line or area                 | yes                                                                 | yes        | no     |
+| Edit or delete                            | anything                                                            | their own  | no     |
+| See the provider map you chose            | by the provider's roles (default: administrator, clerk, councillor) |            |        |
 
 Anyone who cannot see a keyed provider map (for example a member, for Ordnance Survey by default) sees OpenStreetMap instead, so nobody is left with a blank map.
 
@@ -32,14 +32,14 @@ Anyone who cannot see a keyed provider map (for example a member, for Ordnance S
 
 Projects are where the permissions get fiddly, because responsibility for a project can be held by a councillor who is otherwise an ordinary contributor. The table shows what each kind of person can do.
 
-| | Admin, Clerk | Responsible councillor | Other councillors | Members |
-| --- | --- | --- | --- | --- |
-| Create a top-level project, choose who is responsible, delete a project | yes | no | no | no |
-| Edit a project, add a sub-project under it | yes | their own project | no | no |
-| Add an action (into the Ideas lane) or a note | yes | yes | yes | no |
-| Edit or delete an action or note | any | their own, and any action in their project | their own | no |
-| Move or reorder actions | yes | in their project | no | no |
-| Read everything | yes | yes | yes | yes |
+|                                                                         | Admin, Clerk | Responsible councillor                     | Other councillors | Members |
+| ----------------------------------------------------------------------- | ------------ | ------------------------------------------ | ----------------- | ------- |
+| Create a top-level project, choose who is responsible, delete a project | yes          | no                                         | no                | no      |
+| Edit a project, add a sub-project under it                              | yes          | their own project                          | no                | no      |
+| Add an action (into the Ideas lane) or a note                           | yes          | yes                                        | yes               | no      |
+| Edit or delete an action or note                                        | any          | their own, and any action in their project | their own         | no      |
+| Move or reorder actions                                                 | yes          | in their project                           | no                | no      |
+| Read everything                                                         | yes          | yes                                        | yes               | yes     |
 
 Four further points apply to projects.
 
@@ -52,12 +52,11 @@ Four further points apply to projects.
 
 Managing accounts is the most sensitive power in the system, so it is the most tightly limited. The Clerk can look after councillors and members but not the administrators who oversee them.
 
-| | Administrator | Clerk | Others |
-| --- | --- | --- | --- |
-| Invite someone | any role | councillor or member | no |
-| Change a role, disable or enable, reset an authenticator | anyone except themselves | councillors, members and people with no role | no |
-| Read the Activity log | yes | no | no |
-
+|                                                          | Administrator            | Clerk                                        | Others |
+| -------------------------------------------------------- | ------------------------ | -------------------------------------------- | ------ |
+| Invite someone                                           | any role                 | councillor or member                         | no     |
+| Change a role, disable or enable, reset an authenticator | anyone except themselves | councillors, members and people with no role | no     |
+| Read the Activity log                                    | yes                      | no                                           | no     |
 - Nobody can change their own account, so there is always an administrator.
 - Disabling someone, changing their role or resetting their authenticator signs them out everywhere.
 - Inviting creates the account with a random password, and the person chooses their own from an email link. Every action is written to an audit log that only administrators can read and nobody can edit from the browser.

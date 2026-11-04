@@ -77,9 +77,7 @@ export function tileHostsFor(
 ) {
   const { providers } = resolveTiles(tiles);
   return [
-    ...new Set(
-      Object.values(providers).flatMap((p) => providerHosts(p)),
-    ),
+    ...new Set(Object.values(providers).flatMap((p) => providerHosts(p))),
   ];
 }
 
@@ -88,7 +86,10 @@ async function main() {
     pathToFileURL(resolve(deploymentDir, "parish.config.js")).href
   );
   const region = parish.region ?? DEFAULT_REGION;
-  const template = readFileSync(resolve(root, "firebase.template.json"), "utf8");
+  const template = readFileSync(
+    resolve(root, "firebase.template.json"),
+    "utf8",
+  );
   writeFileSync(
     resolve(root, "firebase.json"),
     buildHosting(template, { region, tileHosts: tileHostsFor(parish.tiles) }),
@@ -108,7 +109,10 @@ async function main() {
     );
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (
+  process.argv[1] &&
+  import.meta.url === pathToFileURL(process.argv[1]).href
+) {
   main().catch((error) => {
     console.error(error.message);
     process.exit(1);

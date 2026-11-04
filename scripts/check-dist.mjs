@@ -55,7 +55,9 @@ for (const file of filesIn(dist)) {
   const text = readFileSync(file, "utf8");
   for (const { needle, why } of forbidden) {
     if (text.includes(needle)) {
-      console.error(`${file.slice(dist.length + 1)} contains ${why} (${needle}).`);
+      console.error(
+        `${file.slice(dist.length + 1)} contains ${why} (${needle}).`,
+      );
       found++;
     }
   }

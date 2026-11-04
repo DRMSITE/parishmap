@@ -66,7 +66,8 @@ export function parishPlugin(parish) {
     load(id) {
       if (id === `\0${CONFIG}`)
         return `export default ${JSON.stringify(rest)};`;
-      if (id === `\0${TILES}`) return `export default ${JSON.stringify(tiles)};`;
+      if (id === `\0${TILES}`)
+        return `export default ${JSON.stringify(tiles)};`;
       return undefined;
     },
     transformIndexHtml: (/** @type {string} */ page) =>

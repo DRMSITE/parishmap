@@ -9,13 +9,13 @@
 
 A privacy notice is only as accurate as the description of the data behind it, and the council, not the software's author, answers for it. All data is in **your** Firebase project (Google Cloud), in the Firestore location you chose and under your Google agreement. DRMSITE LTD, the author of the software, has no access to it.
 
-| Data | Where | Who can see it |
-| --- | --- | --- |
-| Accounts: email address, role, whether disabled, last sign-in, whether an authenticator is set up (no names are asked for) | Firebase Authentication | Administrators and the Clerk (People page) |
-| Points, lines, areas: title, notes, position, category; the author's email address and the time of the last change | Firestore | Everyone signed in |
-| Projects, actions, notes: text, status, who is responsible or assigned, links to places; the author's email address and times | Firestore | Everyone signed in (members see them read-only) |
-| Audit log: who invited, changed, disabled or reset whom, and when | Firestore | Administrators |
-| Backups of the above (not accounts) | Firestore backups | Project owners |
+| Data                                                                                                                          | Where                   | Who can see it                                  |
+| ----------------------------------------------------------------------------------------------------------------------------- | ----------------------- | ----------------------------------------------- |
+| Accounts: email address, role, whether disabled, last sign-in, whether an authenticator is set up (no names are asked for)    | Firebase Authentication | Administrators and the Clerk (People page)      |
+| Points, lines, areas: title, notes, position, category; the author's email address and the time of the last change            | Firestore               | Everyone signed in                              |
+| Projects, actions, notes: text, status, who is responsible or assigned, links to places; the author's email address and times | Firestore               | Everyone signed in (members see them read-only) |
+| Audit log: who invited, changed, disabled or reset whom, and when                                                             | Firestore               | Administrators                                  |
+| Backups of the above (not accounts)                                                                                           | Firestore backups       | Project owners                                  |
 
 Email addresses may identify a person, and a clerk's or councillor's name is often in them. Notes and titles are free text, so people can type anything into them, including personal information about others. The software cannot tell the difference, which is why it is worth telling your users what is and is not appropriate to write.
 

@@ -19,7 +19,11 @@ import "@awesome.me/webawesome/dist/components/textarea/textarea.js";
 // from Font Awesome's CDN at run time. That keeps every request on our own origin (no
 // third party sees who opened the map) and keeps the security policy small. To use another
 // icon, copy its SVG from Font Awesome Free's `svgs/solid` folder into src/icons.
-const icons = import.meta.glob("./icons/*.svg", { eager: true, query: "?url", import: "default" });
+const icons = import.meta.glob("./icons/*.svg", {
+  eager: true,
+  query: "?url",
+  import: "default",
+});
 
 registerIconLibrary("default", {
   resolver: (name) => {

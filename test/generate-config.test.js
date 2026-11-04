@@ -21,8 +21,9 @@ describe("buildHosting", () => {
   );
   const csp = out.hosting.headers
     .find((/** @type {any} */ h) => h.source === "**")
-    .headers.find((/** @type {any} */ h) => h.key === "Content-Security-Policy")
-    .value;
+    .headers.find(
+      (/** @type {any} */ h) => h.key === "Content-Security-Policy",
+    ).value;
 
   it("puts the region into the function rewrites", () => {
     const regions = out.hosting.rewrites

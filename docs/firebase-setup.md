@@ -8,7 +8,7 @@ Work through steps 1 to 3 first, and then run `npm run setup`, because it needs 
 
 ## 1. Create the project
 
-Everything else hangs from the project, so it comes first. In the [Firebase console](https://console.firebase.google.com/), choose **Add project**. The *project id*
+Everything else hangs from the project, so it comes first. In the [Firebase console](https://console.firebase.google.com/), choose **Add project**. The _project id_
 (shown under the name) cannot be changed later, which is worth a moment's thought before you accept the suggestion. Google Analytics is not needed, and I would leave it off. The console may also offer to switch on Gemini in Firebase, an AI assistant for the console itself. ParishMap does not use it, so I would skip that as well.
 
 ## 2. Choose the billing plan
@@ -121,10 +121,10 @@ A working site with no backups is one mistake away from losing the council's rec
 
 These are the ones most likely to catch you out.
 
-- *A blank page, or "Firebase is not configured"*: `.env` is missing a value. Rebuild after fixing it, since the values are compiled in at build time.
-- *"Port taken" when running `npm run test:rules` on Windows*: an earlier run left the emulator
+- _A blank page, or "Firebase is not configured"_: `.env` is missing a value. Rebuild after fixing it, since the values are compiled in at build time.
+- _"Port taken" when running `npm run test:rules` on Windows_: an earlier run left the emulator
   running. Stop that `java` process and try again.
-- *"No user with the email ..." from `set-role.mjs`*: the user is in a different project, or has not been saved. Open the Users page of the project named in the script's message and look.
-- *"Couldn't find firebase-functions package" when deploying*: run `npm --prefix functions ci` first.
-- *The map shows OpenStreetMap although you chose another provider*: the function cannot reach the
+- _"No user with the email ..." from `set-role.mjs`_: the user is in a different project, or has not been saved. Open the Users page of the project named in the script's message and look.
+- _"Couldn't find firebase-functions package" when deploying_: run `npm --prefix functions ci` first.
+- _The map shows OpenStreetMap although you chose another provider_: the function cannot reach the
   provider, or the key is missing or wrong. Check the function's logs in the Google Cloud console.

@@ -30,7 +30,8 @@ export const WANTED = {
 };
 
 /** Which parts of the config the update touches, so nothing else is changed. */
-export const UPDATE_MASK = "signIn.email,client.permissions.disabledUserSignup,mfa";
+export const UPDATE_MASK =
+  "signIn.email,client.permissions.disabledUserSignup,mfa";
 
 /**
  * Plain-words differences between the current config and what is wanted.
@@ -81,7 +82,9 @@ export function buildPatch(current) {
 }
 
 async function main() {
-  const { applicationDefault, initializeApp } = await import("firebase-admin/app");
+  const { applicationDefault, initializeApp } = await import(
+    "firebase-admin/app"
+  );
   const { projectId } = await import("./project-id.mjs");
   const id = projectId();
   const confirmed = process.argv.includes("--yes");
@@ -114,7 +117,9 @@ async function main() {
 
   console.log(`Project: ${id}`);
   if (!changes.length) {
-    console.log("Sign-in is already set up as ParishMap needs it. Nothing to change.");
+    console.log(
+      "Sign-in is already set up as ParishMap needs it. Nothing to change.",
+    );
     return;
   }
   console.log(confirmed ? "Changing:" : "This would:");
@@ -130,11 +135,16 @@ async function main() {
     body: JSON.stringify(buildPatch(current)),
   });
   if (!write.ok)
-    throw new Error(`The update was refused (${write.status}): ${await write.text()}`);
+    throw new Error(
+      `The update was refused (${write.status}): ${await write.text()}`,
+    );
   console.log("\nDone. Sign-in is set up.");
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (
+  process.argv[1] &&
+  import.meta.url === pathToFileURL(process.argv[1]).href
+) {
   main().catch((error) => {
     console.error(error.message);
     process.exit(1);

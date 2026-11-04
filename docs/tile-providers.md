@@ -25,10 +25,10 @@ After changing it, run `npm run generate` (or just `npm run build`). That rewrit
 
 Two providers are built in, and they differ mainly in who may see them and what they cost to run.
 
-| Provider | Key | Browser talks to | Who sees it | Zoom | Caching in the browser |
-|---|---|---|---|---|---|
-| `osm` OpenStreetMap | none | OpenStreetMap directly | everyone | to 19 | OpenStreetMap's own headers |
-| `os` Ordnance Survey (OS Maps API, raster) | yes, kept in Secret Manager | our tile function only | admin, clerk, councillor | 7 to 16 on the free plan | up to 7 days |
+| Provider                                   | Key                         | Browser talks to       | Who sees it              | Zoom                     | Caching in the browser      |
+| ------------------------------------------ | --------------------------- | ---------------------- | ------------------------ | ------------------------ | --------------------------- |
+| `osm` OpenStreetMap                        | none                        | OpenStreetMap directly | everyone                 | to 19                    | OpenStreetMap's own headers |
+| `os` Ordnance Survey (OS Maps API, raster) | yes, kept in Secret Manager | our tile function only | admin, clerk, councillor | 7 to 16 on the free plan | up to 7 days                |
 
 ### OpenStreetMap
 

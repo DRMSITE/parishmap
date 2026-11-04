@@ -132,9 +132,14 @@ function main() {
 
   const bad = packages.filter((p) => !isCompatible(p.licence));
   if (bad.length) {
-    console.error("These licences are unknown or may not be compatible with the AGPL:");
-    for (const p of bad) console.error(`  ${p.name}@${p.version}: ${p.licence}`);
-    console.error("Check each by hand, then add it to COMPATIBLE in scripts/licences.mjs if it is.");
+    console.error(
+      "These licences are unknown or may not be compatible with the AGPL:",
+    );
+    for (const p of bad)
+      console.error(`  ${p.name}@${p.version}: ${p.licence}`);
+    console.error(
+      "Check each by hand, then add it to COMPATIBLE in scripts/licences.mjs if it is.",
+    );
     process.exit(1);
   }
 
@@ -143,14 +148,19 @@ function main() {
   if (process.argv.includes("--check")) {
     const current = existsSync(target) ? readFileSync(target, "utf8") : "";
     if (current.replace(/\r\n/g, "\n") !== text) {
-      console.error("THIRD_PARTY_LICENSES.md is out of date. Run `npm run licences`.");
+      console.error(
+        "THIRD_PARTY_LICENSES.md is out of date. Run `npm run licences`.",
+      );
       process.exit(1);
     }
-    console.log(`Licences checked: ${packages.length} packages, all compatible, file up to date.`);
+    console.log(
+      `Licences checked: ${packages.length} packages, all compatible, file up to date.`,
+    );
     return;
   }
   writeFileSync(target, text);
   console.log(`Wrote THIRD_PARTY_LICENSES.md (${packages.length} packages).`);
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href)
+  main();
