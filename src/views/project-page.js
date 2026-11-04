@@ -168,8 +168,9 @@ export function renderProjectPage(container, ctx, id) {
 
   function renderSubs() {
     if (!project) return;
+    const parentId = project.id;
     const children = data.projects
-      .filter((p) => p.parentId === project?.id)
+      .filter((p) => p.parentId === parentId)
       .sort(
         (a, b) =>
           a.title.localeCompare(b.title, "en-GB") || a.id.localeCompare(b.id),
