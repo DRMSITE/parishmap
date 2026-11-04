@@ -157,7 +157,7 @@ export async function handleTileRequest(request, deps, settings) {
   const provider = Object.hasOwn(settings.providers, tile.provider)
     ? settings.providers[tile.provider]
     : undefined;
-  if (!provider || !provider.styles.includes(tile.style))
+  if (!provider?.styles.includes(tile.style))
     return refuse(404, "No such map.");
   if (!provider.roles.includes(token.role))
     return refuse(403, `The ${provider.id} map is not available to your role.`);

@@ -37,6 +37,7 @@ header[slot="header"] {
 /* wa-page gives its slotted navigation a display value, which beats the browser's
    `[hidden]` rule. Without this the links show before sign-in. */
 [data-chrome][hidden] {
+  /* biome-ignore lint/complexity/noImportantStyles: must beat Web Awesome's page styles */
   display: none !important;
 }
 
@@ -460,6 +461,7 @@ wc-location-field {
   transform: rotate(-45deg);
 }
 
+/* biome-ignore lint/style/noDescendingSpecificity: different containers (map popup and list item), so the rules never meet */
 .point-popup p {
   margin: 0.25rem 0;
 }

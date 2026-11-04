@@ -222,5 +222,7 @@ try {
   fail(/** @type {Error} */ (error).message);
 }
 console.log("\nWritten. Next:");
-nextSteps(answers).forEach((step, i) => console.log(`  ${i + 1}. ${step}`));
+for (const [i, step] of nextSteps(answers).entries()) {
+  console.log(`  ${i + 1}. ${step}`);
+}
 console.log("");

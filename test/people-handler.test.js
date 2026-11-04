@@ -250,7 +250,7 @@ describe("invite", () => {
       (
         await call({
           action: "invite",
-          email: "x".repeat(250) + "@b.org",
+          email: `${"x".repeat(250)}@b.org`,
           role: "member",
         })
       ).status,

@@ -9,6 +9,12 @@
   "javascript": { "formatter": { "quoteStyle": "double" } },
   "html": { "formatter": { "enabled": false } },
   "css": { "formatter": { "enabled": true } },
+  "overrides": [
+    {
+      "includes": ["src/icons/**"],
+      "linter": { "rules": { "a11y": { "noSvgWithoutTitle": "off" } } }
+    }
+  ],
   "assist": {
     "enabled": true,
     "actions": { "source": { "organizeImports": "on" } }

@@ -40,7 +40,7 @@ async function run(root, action, button) {
  * @param {string} name
  * @returns {string}
  */
-const valueOf = (root, name) =>
+const fieldValue = (root, name) =>
   String(
     /** @type {any} */ (root.querySelector(`[name="${name}"]`))?.value ?? "",
   );
@@ -128,7 +128,8 @@ function signIn(page, session, state) {
     event.preventDefault();
     void run(
       page,
-      () => session.signIn(valueOf(form, "email"), valueOf(form, "password")),
+      () =>
+        session.signIn(fieldValue(form, "email"), fieldValue(form, "password")),
       page.querySelector("[data-submit]"),
     );
   });
@@ -158,7 +159,7 @@ function forgottenPassword(page, session) {
     statusEl.textContent = "";
     button.loading = true;
     try {
-      await session.sendPasswordReset(valueOf(form, "reset-email"));
+      await session.sendPasswordReset(fieldValue(form, "reset-email"));
       statusEl.textContent =
         "If that address has an account, a link to choose a new password is on its way. It can take a few minutes, so check your spam folder too.";
     } catch (error) {
@@ -191,7 +192,7 @@ function secondFactor(page, session) {
     event.preventDefault();
     void run(
       page,
-      () => session.verifySecondFactor(valueOf(form, "code")),
+      () => session.verifySecondFactor(fieldValue(form, "code")),
       page.querySelector("[data-submit]"),
     );
   });
@@ -320,7 +321,7 @@ function enrol(page, session, state) {
     event.preventDefault();
     void run(
       form,
-      () => session.finishEnrolment(valueOf(form, "code")),
+      () => session.finishEnrolment(fieldValue(form, "code")),
       page.querySelector("[data-submit]"),
     );
   });
