@@ -3,7 +3,7 @@
   "platforms": ["Web"],
   "content": "README.md",
   "pages": {
-    "docs/setup.md": "Firebase Setup"
+    "docs/firebase-setup.md": "Firebase Setup"
   },
   "related": ["DRMSITE/MealMuster"]
 }
