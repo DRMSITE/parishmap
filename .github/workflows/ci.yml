@@ -30,9 +30,11 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npm run licences:check
-      # The Cloud Functions have their own lock file and are deployed as they stand. The
-      # site's own dependencies are not gated: its only high findings come from the Firebase
-      # client's gRPC, where the offered fix is a downgrade.
+      # The site's own dependencies are gated too, except for advisories that have been read and
+      # accepted in scripts/audit.mjs (today the Firebase client's gRPC, where the offered fix is
+      # a downgrade).
+      - run: npm run audit:site
+      # The Cloud Functions have their own lock file and are deployed as they stand.
       - run: npm --prefix functions ci
       - run: npm --prefix functions audit --omit=dev --audit-level=high
       # A normal build, as deployed, with nothing in it that should not be public.

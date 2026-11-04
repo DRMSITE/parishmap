@@ -5,6 +5,14 @@ All notable changes are recorded here. The format follows
 [Semantic Versioning](https://semver.org/) once it reaches 1.0. A release that changes
 `firestore.rules` says so, because the rules must be deployed with it.
 
+## [Unreleased]
+
+### Added
+
+- `npm run audit:site`, run in continuous integration, fails on a high or critical advisory in the
+  packages that ship with the site unless it has been read and accepted in `scripts/audit.mjs`.
+  The one accepted today is the Firebase client's gRPC, which has no fixed release yet.
+
 ## [0.1.2] - 2026-11-04
 
 This release does not change `firestore.rules`. The Cloud Functions' code changed slightly (see

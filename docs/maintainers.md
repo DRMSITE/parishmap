@@ -24,6 +24,7 @@ notice if it is forgotten. Do these once, when the repository is created, and ti
 
 1. `npm run typecheck && npm run lint && npm test && npm run test:e2e && npm run test:rules`
 2. `npm run licences:check` (regenerate with `npm run licences` if a dependency changed)
+   and `npm run audit:site` (fails on a high or critical advisory in the site's packages that is not accepted in `scripts/audit.mjs`)
 3. `npm run build && npm run check:dist`
 4. Update `CHANGELOG.md`, and say if `firestore.rules` changed.
 5. Tag it (`v0.1.0`) and publish release notes taken from the changelog.

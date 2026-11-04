@@ -20,6 +20,7 @@
     "test:coverage": "vitest run --coverage",
     "licences": "node scripts/licences.mjs",
     "licences:check": "node scripts/licences.mjs --check",
+    "audit:site": "node scripts/audit.mjs",
     "configure-auth": "node scripts/configure-auth.mjs",
     "generate": "node scripts/generate-config.mjs",
     "prebuild": "npm run generate",
